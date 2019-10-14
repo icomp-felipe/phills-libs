@@ -47,15 +47,28 @@ public class CellNumberUtils {
 	}
 	
 	/** Recupera um contato e formata com a máscara de contatos (sempre com DDD) */
-	public static String format(String contato) {
+	public static String format(String contato, boolean comDDD) {
 		
 		if (contato != null) {
 			
-			if (contato.length() == 10)
-				return String.format("(%s) %s-%s",contato.substring(0,2),contato.substring(2,6),contato.substring(6));
-			
-			if (contato.length() == 11)
-				return String.format("(%s) %s-%s",contato.substring(0,2),contato.substring(2,7),contato.substring(7));
+			if (comDDD) {
+				
+				if (contato.length() == 10)
+					return String.format("(%s) %s-%s",contato.substring(0,2),contato.substring(2,6),contato.substring(6));
+				
+				if (contato.length() == 11)
+					return String.format("(%s) %s-%s",contato.substring(0,2),contato.substring(2,7),contato.substring(7));
+				
+			}
+			else {
+				
+				if (contato.length() == 10)
+					return String.format("%s-%s",contato.substring(2,6),contato.substring(6));
+				
+				if (contato.length() == 11)
+					return String.format("%s-%s",contato.substring(2,7),contato.substring(7));
+				
+			}
 			
 		}
 		
