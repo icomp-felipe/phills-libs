@@ -225,8 +225,14 @@ public class StringUtils {
 
 	public static String replaceWithParameters(String msg, Map<String, Object> parameters) {
 		
-		for (Map.Entry<String,Object> set: parameters.entrySet())
-			msg = msg.replace(set.getKey(),set.getValue().toString());
+		for (Map.Entry<String,Object> set: parameters.entrySet()) {
+			Object o = set.getValue();
+			
+			if (o == null)
+				System.err.println(":: NULL Parameter: " + set.getKey());
+			else			
+				msg = msg.replace(set.getKey(),set.getValue().toString());
+		}
 		
 		return msg;
 	}
