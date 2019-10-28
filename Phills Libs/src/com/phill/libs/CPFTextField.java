@@ -57,4 +57,8 @@ public class CPFTextField extends JFormattedTextField {
 		super.setValue(value);	parse();
 	}
 	
+	public boolean valido() {
+		return CPFParser.parse(getText());
+	}
+	
 }
