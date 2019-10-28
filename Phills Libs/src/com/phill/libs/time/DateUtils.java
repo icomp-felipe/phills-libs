@@ -73,6 +73,10 @@ public class DateUtils {
 		return Calendar.getInstance().get(Calendar.YEAR);
 	}
 	
+	public static int getCurrentSemester() {
+		return new DateTime().getMonthOfYear() / 6 + 1;
+	}
+	
 	public static boolean dataPassada(DateTime date) {
 
 		DateTime today = new DateTime();
