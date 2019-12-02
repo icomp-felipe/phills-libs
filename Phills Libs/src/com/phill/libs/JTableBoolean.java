@@ -5,6 +5,7 @@ import javax.swing.table.TableModel;
 
 public class JTableBoolean extends JTable {
 
+	private boolean editable = true;
 	private final int booleanColumn;
 	private static final long serialVersionUID = 1L;
 
@@ -17,5 +18,14 @@ public class JTableBoolean extends JTable {
     public Class<?> getColumnClass(int column) {
 		return (column == booleanColumn) ? Boolean.class : String.class;
     }
+	
+	@Override
+	public boolean isCellEditable(int row, int col) {
+		return (col == 2) ? this.editable : false;
+	}
+
+	public void setEditable(boolean enable) {
+		this.editable = enable;
+	}
 	
 }
