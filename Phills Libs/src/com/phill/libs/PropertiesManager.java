@@ -49,14 +49,14 @@ public class PropertiesManager {
 		StringBuilder builder = new StringBuilder();
 		
 		for (String aux: array)
-			builder.append(aux + "#");
+			builder.append(aux + ";");
 		
 		return builder.toString();
 	}
 	
 	/** Converte uma string delimitada por '#' para um array de String */
 	private static String[] deserialize(String raw_array) {
-		return raw_array.split("#");
+		return raw_array.split(";");
 	}
 	
 	/** Retorna uma propriedade */
