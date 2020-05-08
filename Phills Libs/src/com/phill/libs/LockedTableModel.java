@@ -18,5 +18,5 @@ public class LockedTableModel extends DefaultTableModel {
 	public boolean isCellEditable(int row, int column) {
 		return false;
 	}
-
+	
 }
