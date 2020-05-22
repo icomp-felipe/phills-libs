@@ -18,6 +18,8 @@ public class FileFilters {
 	public static final FileNameExtensionFilter JPG = new FileNameExtensionFilter("Imagem JPEG (.jpg)","jpg");
 	public static final FileNameExtensionFilter SVG = new FileNameExtensionFilter("Imagem SVG (.svg)","svg");
 	public static final FileNameExtensionFilter PNG = new FileNameExtensionFilter("Imagem PNG (.png)","png");
+	
+	public static final FileNameExtensionFilter MKV = new FileNameExtensionFilter("Matroska Video File (.mkv)","mkv");
 
 	public static final FileNameExtensionFilter[] SISTAC_INPUT = new FileNameExtensionFilter[]{FileFilters.CSV_N,FileFilters.TSV,FileFilters.XLSX};
 	
