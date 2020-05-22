@@ -1,12 +1,29 @@
 package com.phill.libs;
 
 import java.io.*;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
 import java.util.Arrays;
 import java.util.Comparator;
 
 public class PhillFileUtils {
 
 	private static final Comparator<File> comparadorArquivo = (a1,a2) -> a1.getName().compareTo(a2.getName());
+	
+	public static String humanReadableByteCount(long bytes) {
+	    long absB = bytes == Long.MIN_VALUE ? Long.MAX_VALUE : Math.abs(bytes);
+	    if (absB < 1024) {
+	        return bytes + " B";
+	    }
+	    long value = absB;
+	    CharacterIterator ci = new StringCharacterIterator("KMGTPE");
+	    for (int i = 40; i >= 0 && absB > 0xfffccccccccccccL >> i; i -= 10) {
+	        value >>= 10;
+	        ci.next();
+	    }
+	    value *= Long.signum(bytes);
+	    return String.format("%.2f %cB", value / 1024.0, ci.current());
+	}
 	
 	public static File[] findFilesInDir(File directory, String extension){
 	    //File dir = new File(dirName);
