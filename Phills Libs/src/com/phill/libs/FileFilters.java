@@ -20,6 +20,7 @@ public class FileFilters {
 	public static final FileNameExtensionFilter PNG = new FileNameExtensionFilter("Imagem PNG (.png)","png");
 	
 	public static final FileNameExtensionFilter MKV = new FileNameExtensionFilter("Matroska Video File (.mkv)","mkv");
+	public static final FileNameExtensionFilter MP4 = new FileNameExtensionFilter("MP4 Video File (.mp4)","mp4");
 
 	public static final FileNameExtensionFilter[] SISTAC_INPUT = new FileNameExtensionFilter[]{FileFilters.CSV_N,FileFilters.TSV,FileFilters.XLSX};
 	
