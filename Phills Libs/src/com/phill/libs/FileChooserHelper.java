@@ -25,7 +25,8 @@ public class FileChooserHelper {
 	public static File loadFile(Component component, FileNameExtensionFilter[] tiposArquivo, String titulo, boolean salvarAbrir, File sugestao) {
 		JFileChooser chooser = new JFileChooser();
 		
-		chooser.setSelectedFile(sugestao);
+		//chooser.setSelectedFile(sugestao);
+		chooser.setCurrentDirectory(sugestao);
 		
 		chooser.setDialogTitle(titulo);
 		

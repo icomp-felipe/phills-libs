@@ -1,4 +1,6 @@
-package com.phill.libs;
+package com.phill.libs.br;
+
+import com.phill.libs.StringUtils;
 
 /** Classe de verificação do PIS/PASEP
  *  @author  Felipe André

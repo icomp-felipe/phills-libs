@@ -9,6 +9,7 @@ import java.awt.datatransfer.*;
 /** Classe que contém métodos úteis de manipulação de telas de diálogo
  *  @author Felipe André
  *  @version 3.0, 22/03/2016 */
+@Rewritten
 public class AlertDialog extends JOptionPane {
 	
 	private static final long serialVersionUID = 1L;
