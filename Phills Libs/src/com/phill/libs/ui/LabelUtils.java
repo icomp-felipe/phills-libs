@@ -1,4 +1,4 @@
-package com.phill.libs.gui;
+package com.phill.libs.ui;
 
 import java.awt.*;
 import javax.swing.*;
