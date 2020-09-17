@@ -1,9 +1,8 @@
-package com.phill.libs;
+package com.phill.libs.table;
 
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
-import com.phill.libs.table.JTableRowData;
 
 /** Provides useful methods to deal with Table components in Java UI applications.
  *  @author Felipe André - felipeandresouza@hotmail.com
