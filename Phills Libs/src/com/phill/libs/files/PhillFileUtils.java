@@ -1,4 +1,4 @@
-package com.phill.libs.sys;
+package com.phill.libs.files;
 
 import java.io.*;
 import java.util.Arrays;
