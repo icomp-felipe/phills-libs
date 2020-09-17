@@ -4,6 +4,8 @@ import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 
+import com.phill.libs.ui.AlertDialog;
+
 public class MandatoryFieldsManager {
 
 	private ArrayList<MandatoryField> permanents;
@@ -149,7 +151,7 @@ public class MandatoryFieldsManager {
 		String errors = error_list.toString().trim();
 		
 		if (!errors.isEmpty())
-			AlertDialog.erro("Campos Obrigatórios",errors);
+			AlertDialog.error("Campos Obrigatórios",errors);
 		
 	}
 	

@@ -5,6 +5,8 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.filechooser.*;
 
+import com.phill.libs.ui.AlertDialog;
+
 /** Encapsula as operações de abertura e fechamento de arquivo do Swing
  *  @author Felipe André
  *  @version 1.0, 02/08/2015 */
@@ -58,7 +60,7 @@ public class FileChooserHelper {
 	    File arquivo = new File(filename);
 	    
 	    if ( (salvarAbrir) && arquivo.exists() )
-	    	if (AlertDialog.dialog("O arquivo selecionado já existe!\nDeseja sobrescrevê-lo?") != JOptionPane.OK_OPTION)
+	    	if (AlertDialog.dialog("O arquivo selecionado já existe!\nDeseja sobrescrevê-lo?") != AlertDialog.OK_OPTION)
 	    		return null;
 	    
 	    return arquivo;

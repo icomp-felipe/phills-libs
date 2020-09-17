@@ -3,6 +3,8 @@ package com.phill.libs;
 import java.util.*;
 import javax.swing.*;
 
+import com.phill.libs.ui.AlertDialog;
+
 public class MandatoryFieldsListener {
 
 	private final ArrayList<JLabel> components;
@@ -51,7 +53,7 @@ public class MandatoryFieldsListener {
 		String error_string = getErrorString();
 		
 		if (error_string != null)
-			AlertDialog.erro("Campos Obrigatórios",error_string);
+			AlertDialog.error("Campos Obrigatórios",error_string);
 		
 	}
 	
