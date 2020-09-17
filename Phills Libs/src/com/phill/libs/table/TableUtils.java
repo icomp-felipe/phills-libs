@@ -83,7 +83,7 @@ public class TableUtils {
 		TableColumnModel model = table.getColumnModel();
 		
 		for (int i=0; i<table.getColumnCount(); i++)
-			System.out.printf("Column %d: %d\n",i,model.getColumn(i).getPreferredWidth());
+			System.out.printf("Column %d: %dpx\n",i,model.getColumn(i).getPreferredWidth());
 		
 	}
 	

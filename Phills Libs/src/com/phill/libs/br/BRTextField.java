@@ -3,8 +3,9 @@ package com.phill.libs.br;
 import java.awt.Color;
 import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
-import com.phill.libs.KeyboardAdapter;
+
 import com.phill.libs.StringUtils;
+import com.phill.libs.ui.KeyReleasedListener;
 
 /** Cria um campo de texto formatado com a máscara informada e faz
  *  validação dos dados inseridos de acordo com o método abstrato 'parse'.
@@ -25,7 +26,7 @@ public abstract class BRTextField extends JFormattedTextField {
 	
 	public BRTextField(MaskFormatter mascara) {
 		super(mascara);
-		this.addKeyListener((KeyboardAdapter) (event) -> parse());
+		this.addKeyListener((KeyReleasedListener) (event) -> parse());
 	}
 
 	/** Aplica o texto e pinta este campo de acordo com as cores:<br>

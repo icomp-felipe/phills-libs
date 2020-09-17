@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.regex.Pattern;
 import javax.swing.JTextField;
 
+import com.phill.libs.ui.KeyReleasedListener;
+
 /** 
  *  @author Felipe André
  *  @version 1.0, 25/09/2018
@@ -22,7 +24,7 @@ public class EmailTextField extends JTextField {
 	
 	public EmailTextField() {
 		this.pattern = Pattern.compile(email_pattern,Pattern.CASE_INSENSITIVE);
-		this.addKeyListener((KeyboardAdapter) (event) -> parse());
+		this.addKeyListener((KeyReleasedListener) (event) -> parse());
 	}
 
 	public synchronized boolean parse() {
