@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import com.phill.libs.sys.PhillFileUtils;
+
 /** Faz a interface do programa com arquivos externos
  *  @author Felipe André
  *  @version 3.0, 23/03/2016 */
