@@ -13,12 +13,7 @@ import com.phill.libs.ui.AlertDialog;
 public class FileChooserHelper {
 	
 	/* Constantes úteis */
-	public static final File HOME_DIRECTORY = getUserHome();
-	
-	/** Retorna o diretório do usuário */
-	private static File getUserHome() {
-		return new File(System.getProperty("user.home"));
-	}
+	public static final File HOME_DIRECTORY = new File(System.getProperty("user.home"));
 	
 	public static File loadFile(Component component, FileNameExtensionFilter tipoArquivo, String titulo, boolean salvarAbrir, File sugestao) {
 		return loadFile(component, new FileNameExtensionFilter[]{tipoArquivo}, titulo, salvarAbrir, sugestao);
