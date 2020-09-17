@@ -4,6 +4,8 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
+import com.phill.libs.table.JTableRowData;
+
 public class TableUtils {
 
 	public static <T> T getSelected(JTable table, ArrayList<T> list) {
@@ -36,18 +38,18 @@ public class TableUtils {
 		
 	}
 	
-	public static void add(DefaultTableModel model, Resumeable data) {
+	public static void add(DefaultTableModel model, JTableRowData data) {
 		
-		Object[] resume = data.getResume();
+		Object[] resume = data.getRowData();
 		model.addRow(resume);
 		
 	}
 	
-	public static <T extends Resumeable> void load(DefaultTableModel model, List<T> list, JLabel label) {
+	public static <T extends JTableRowData> void load(DefaultTableModel model, List<T> list, JLabel label) {
 		
 		clear(model);
 		
-		for (Resumeable resume: list)
+		for (JTableRowData resume: list)
 			add(model,resume);
 		
 		updateSize(model,label);
