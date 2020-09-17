@@ -1,4 +1,4 @@
-package com.phill.libs;
+package com.phill.libs.ui;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
