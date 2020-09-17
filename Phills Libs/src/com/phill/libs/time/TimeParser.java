@@ -1,6 +1,7 @@
 package com.phill.libs.time;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import org.joda.time.DateTime;
 
@@ -51,5 +52,37 @@ public class TimeParser {
 		return null;
 		
 	}
+	
+	/** Returns a string formatted like '12 h 57 min 34 s'.
+	 *  using a timestamp in 'sec' format.
+	 *  @param seconds - timestamp in seconds
+	 *  @return Time in format '12 h 57 min 34 s'. */
+	public static String getHumanReadableTime(long seconds) {
+		
+        if(seconds < 0) {
+            return "0s";
+        }
+        
+        long hours = TimeUnit.SECONDS.toHours(seconds);
+        seconds   -= TimeUnit.HOURS.toSeconds(hours);
+        
+        long minutes = TimeUnit.SECONDS.toMinutes(seconds);
+        seconds -= TimeUnit.MINUTES.toSeconds(minutes);
+
+        StringBuilder sb = new StringBuilder(64);
+        
+        if (hours > 0) {
+        	sb.append(hours);
+        	sb.append(" h ");
+        }
+        if (minutes > 0) {
+        	sb.append(minutes);
+        	sb.append(" min ");
+        }
+        sb.append(seconds);
+        sb.append(" s");
+
+        return(sb.toString());
+    }
 	
 }
