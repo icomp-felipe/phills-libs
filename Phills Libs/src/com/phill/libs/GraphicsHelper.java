@@ -89,6 +89,10 @@ public final class GraphicsHelper {
 		return new TitledBorder(null, title, TitledBorder.LEADING, TitledBorder.TOP, getFont(), getColor());
 	}
 	
+	public TitledBorder getTitledBorder(String title, Font font) {
+		return new TitledBorder(null, title, TitledBorder.LEADING, TitledBorder.TOP, (font == null) ? getFont() : font, getColor());
+	}
+	
 	/** Cria uma Máscara Personalizada para os text fields do Java Swing */
 	public MaskFormatter getMascara(String mascara) {
 		return getMascara(mascara,' ');

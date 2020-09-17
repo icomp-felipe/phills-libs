@@ -2,9 +2,7 @@ package com.phill.libs.br;
 
 import java.awt.Color;
 import javax.swing.JFormattedTextField;
-
 import com.phill.libs.GraphicsHelper;
-import com.phill.libs.KeyboardAdapter;
 import com.phill.libs.StringUtils;
 
 /** Cria um campo de texto formatado com a máscara de CPF e
@@ -12,22 +10,22 @@ import com.phill.libs.StringUtils;
  *  esteja correto, o campo muda de cor para 'verde', caso
  *  contrário, muda para 'vermelho'. Se o CPF digitado esti
  *  ver incompleto, o campo permanece em 'branco'.
- *  @author Felipe André
- *  @version 2.5, 11/09/2018
+ *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @version 4.0, 17/SET/2020
  *  @see JFormattedTextField  */
-public class CPFTextField extends JFormattedTextField {
-
-	private final Color gr_lt  = new Color(0x84efa5);
-	private final Color rd_lt  = new Color(0xef8e84);
+public class CPFTextField extends BRTextField {
+	
+	// Serial
 	private static final long serialVersionUID = 1L;
 	
+	/** Construtor da classe já aplicando a máscara
+	 *  de CPF e adicionando algoritmo de validação. */
 	public CPFTextField() {
 		super(GraphicsHelper.getInstance().getMascara("###.###.###-##"));
-		this.addKeyListener((KeyboardAdapter) (event) -> parse());
 	}
 	
 	/** Realiza a validação de dados na interface gráfica */
-	private void parse() {
+	protected void parse() {
 
 		String cpf = StringUtils.extractNumbers(getText());
 		
@@ -49,20 +47,4 @@ public class CPFTextField extends JFormattedTextField {
 		return (apenasNumeros) ? StringUtils.extractNumbers(getText()) : getText();
 	}
 
-	@Override
-	/** Pinta de branco caso a 'string' seja vazia */
-	public void setText(String string) {
-		super.setText(string);	parse();
-	}
-	
-	@Override
-	/** Pinta de branco caso a 'string' seja vazia */
-	public void setValue(Object value) {
-		super.setValue(value);	parse();
-	}
-	
-	public boolean valido() {
-		return CPFParser.parse(getText());
-	}
-	
 }

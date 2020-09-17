@@ -8,7 +8,7 @@ public class StringUtils {
 
 	/** Converte os atributos em branco para 'null' em uma String SQL */
 	public static String blank_to_null(String query_sql) {
-		return query_sql.replace("\"\"","null").replace("\"null\"","null");
+		return query_sql.replace("\"\"","null").replace("\"null\"","null").replace("''","null").replace("'null'","null");
 	}
 	
 	public static String getResumedName(String name) {

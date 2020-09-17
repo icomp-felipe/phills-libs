@@ -2,46 +2,33 @@ package com.phill.libs.br;
 
 import com.phill.libs.StringUtils;
 
-/** Classe de verificação do PIS/PASEP
- *  @author  Felipe André
- *  @version 1.0, 11/09/2018 */
+/** Implementa o algoritmo de verificação de PIS/PASEP/NIS/NIT.
+ *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @version 1.5, 17/SET/2020 */
 public class PISParser {
 
-	@Deprecated
-	public static boolean validaPIS(String pis) {
-		
-		String aux = StringUtils.extractNumbers(pis);
-		
-		return (aux.length() == 11);
-	}
-	
-	/** Algoritmo de verificação de PIS/PASEP */
+	/** Verifica se um número de PIS/PASEP/NIS/NIT é válido.
+	 *  @param pis - String contendo número de PIS, pode conter máscara ou não, aqui apenas os números são extraídos.
+	 *  @return Validade do PIS (cálculo numérico). */
 	public static boolean parse(String pis) {
 		
-		// Extraindo apenas os números
-		String numbers = StringUtils.extractNumbers(pis);
+		// Se o pis recebido for nulo, encerro o código aqui
+		if (pis == null)
+			return false;
+			
+		// Extraindo apenas os números do PIS
+		pis = StringUtils.extractNumbers(pis);
 		
-		// Se o número tiver menos que 11 dígitos ou for nulo, o PIS já é inválido
-		if ((numbers == null) || (numbers.length() < 11))
+		// Verificando absurdos
+		if (verificaAbsurdos(pis))
 			return false;
 		
 		// Se o número tiver mais que 11 dígitos, "capo" ele em 11
-		if (numbers.length() > 11)
-			numbers = numbers.substring(0,11);
+		if (pis.length() > 11)
+			pis = pis.substring(0,11);
 		
-		// Verifica absurdos
-		if (numbers.equals("00000000000") ||
-			numbers.equals("11111111111") ||
-			numbers.equals("22222222222") ||
-			numbers.equals("33333333333") ||
-			numbers.equals("44444444444") ||
-			numbers.equals("55555555555") ||
-			numbers.equals("66666666666") ||
-			numbers.equals("77777777777") ||
-			numbers.equals("88888888888") ||
-			numbers.equals("99999999999"))
-			return false;
-
+		/**************** Cálculo propriamente dito ****************/
+		
 		// Criando o vetor de pesos
 		int[] pesos = new int[]{3,2,9,8,7,6,5,4,3,2};
 		
@@ -49,7 +36,7 @@ public class PISParser {
 		int[] vetor_pis = new int[10];
 		
 		for (int i=0; i<10; i++)
-			vetor_pis[i] = Character.getNumericValue(numbers.charAt(i));
+			vetor_pis[i] = Character.getNumericValue(pis.charAt(i));
 		
 		// Soma de produtos dos vetores
 		int soma_prod = 0;
@@ -62,7 +49,19 @@ public class PISParser {
 		int verificador = (resto_divs < 2 ) ? 0 : (11 - resto_divs);
 		
 		// Validação do dígito verificador
-		return (Character.getNumericValue(numbers.charAt(10)) == verificador);
+		return (Character.getNumericValue(pis.charAt(10)) == verificador);
+	}
+	
+	/** Verifica os absurdos de CPF inválidos.
+	 *  @param cpf - String contendo o número de CPF (apenas os 11 dígitos)
+	 *  @return 'true' se algum absurdo foi encontrado ou 'false', caso contrário */
+	private static boolean verificaAbsurdos(String pis) {
+		return (pis.equals("00000000000") || pis.equals("11111111111") ||
+				pis.equals("22222222222") || pis.equals("33333333333") ||
+				pis.equals("44444444444") || pis.equals("55555555555") ||
+				pis.equals("66666666666") || pis.equals("77777777777") ||
+				pis.equals("88888888888") || pis.equals("99999999999") ||
+		        pis.length() < 11);
 	}
 	
 }

@@ -49,4 +49,19 @@ public class AlertDialog extends JOptionPane {
 		return JOptionPane.showConfirmDialog(null,message);
 	}
 	
+	/** Displays a text input dialog with a custom message using {@link JOptionPane}.
+	 *  @param title - Custom dialog title
+	 *  @param message - Message to be displayed
+	 *  @see JOptionPane */
+	public static String input(final String title, final String message) {
+		return JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE);
+	}
+	
+	/** Displays a text input dialog with a custom message using {@link JOptionPane}.
+	 *  @param message - Message to be displayed
+	 *  @see JOptionPane */
+	public static String input(final String message) {
+		return JOptionPane.showInputDialog(null, message, "Input", JOptionPane.QUESTION_MESSAGE);
+	}
+	
 }
