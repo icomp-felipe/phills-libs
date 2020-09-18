@@ -51,7 +51,7 @@ public class JEmailField extends JTextField {
 	
 	/** Tells if the internal text is a valid e-mail address.
 	 *  @return 'true' if the internal data is a valid e-mail or 'false' otherwise */
-	public boolean isValid() {
+	public boolean isCoherent() {
 		return pattern.matcher(getText()).matches();
 	}
 	

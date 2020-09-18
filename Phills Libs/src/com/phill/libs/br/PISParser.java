@@ -6,6 +6,18 @@ import com.phill.libs.StringUtils;
  *  @author Felipe André - felipeandresouza@hotmail.com
  *  @version 1.5, 17/SET/2020 */
 public class PISParser {
+	
+	/** Aplica a máscara de PIS na string informada.
+	 *  @param pis - PIS contendo apenas os 11 dígitos
+	 *  @return Uma string com a máscara de PIS aplicada caso os requisitos
+	 *  deste parâmetro sejam cumpridos, ou a string original, caso contrário. */
+	public static String format(final String pis) {
+		
+		if ( (pis == null) || (pis.length() != 11))
+			return pis;
+		
+		return String.format("%s.%s.%s-%s",pis.substring(0,3),pis.substring(3,8),pis.substring(8,10),pis.substring(10));
+	}
 
 	/** Verifica se um número de PIS/PASEP/NIS/NIT é válido.
 	 *  @param pis - String contendo número de PIS, pode conter máscara ou não, aqui apenas os números são extraídos.

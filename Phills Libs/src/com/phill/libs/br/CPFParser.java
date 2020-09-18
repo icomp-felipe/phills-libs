@@ -15,6 +15,18 @@ public class CPFParser {
 	private static final int TENTH 	  = 0xA;
 	private static final int ELEVENTH = 0xB;
 	
+	/** Aplica a máscara de CPF na string informada.
+	 *  @param cpf - CPF contendo apenas os 11 dígitos
+	 *  @return Uma string com a máscara de CPF aplicada caso os requisitos
+	 *  deste parâmetro sejam cumpridos, ou a string original, caso contrário. */
+	public static String format(final String cpf) {
+		
+		if ( (cpf == null) || (cpf.length() != 11))
+			return cpf;
+		
+		return String.format("%s.%s.%s-%s",cpf.substring(0,3),cpf.substring(3,6),cpf.substring(6,9),cpf.substring(9));
+	}
+	
 	/** Verifica se um número de CPF é válido.
 	 *  @param cpf - String contendo número de CPF, pode conter máscara ou não, aqui apenas os números são extraídos.
 	 *  @return Validade do CPF (cálculo numérico) */
