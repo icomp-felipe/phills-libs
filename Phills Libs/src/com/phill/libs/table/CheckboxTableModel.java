@@ -22,33 +22,33 @@ public class CheckboxTableModel extends DefaultTableModel {
 	 *  as {@link JCheckBox} instead of regular text fields. If no valid indexes are passed
 	 *  (between 0 and columns.lenght), this class behaves like a regular {@link DefaultTableModel}.<br>
 	 *  Note: by default, only the checkbox fields are editable.
-	 *  @param columns - column header object data - usually an String array
+	 *  @param header - column header object data - usually a String array
 	 *  @param checkboxColumnsIndex - indexes to be treated as {@link JCheckBox}es */
-	public CheckboxTableModel(final Object[] columns, final int... checkboxColumnsIndex) {
-		this(columns,null,checkboxColumnsIndex);
+	public CheckboxTableModel(final Object[] header, final int... checkboxColumnsIndex) {
+		this(header,null,checkboxColumnsIndex);
 	}
 	
 	/** This constructor sets the column header, fills the initial data and defines some column indexes to be treated
 	 *  as {@link JCheckBox} instead of regular text fields. If no valid indexes are passed
 	 *  (between 0 and columns.lenght), this class behaves like a regular {@link DefaultTableModel}.<br>
 	 *  Note: by default, only the checkbox fields are editable.
-	 *  @param columns - column header object data - usually an String array
+	 *  @param header - column header object data - usually a String array
 	 *  @param data - initial data to be filled
 	 *  @param checkboxColumnsIndex - indexes to be treated as {@link JCheckBox}es */
-	public CheckboxTableModel(final Object[] columns, final Object[][] data, final int... checkboxColumnsIndex) {
-		super(data,columns);
-		this.checkboxColumnsIndex = parse(columns,checkboxColumnsIndex);
+	public CheckboxTableModel(final Object[] header, final Object[][] data, final int... checkboxColumnsIndex) {
+		super(data,header);
+		this.checkboxColumnsIndex = parse(header,checkboxColumnsIndex);
 	}
 	
 	/** Iterate through the given indexes and selects those who are in the column index range.
-	 *  @param columns - column header data
+	 *  @param header - column header data
 	 *  @param indexes - indexes to be treated as {@link JCheckBox}es */
-	private ArrayList<Integer> parse(final Object[] columns, final int... indexes) {
+	private ArrayList<Integer> parse(final Object[] header, final int... indexes) {
 
-		final ArrayList<Integer> indexList = new ArrayList<Integer>(columns.length);
+		final ArrayList<Integer> indexList = new ArrayList<Integer>(header.length);
 		
 		for (int index: indexes)
-			if ((index >= 0) && (index < columns.length))
+			if ((index >= 0) && (index < header.length))
 				indexList.add(index);
 		
 		return indexList;
