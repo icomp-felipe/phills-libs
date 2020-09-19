@@ -6,7 +6,7 @@ import javax.swing.table.*;
 
 /** Provides useful methods to deal with Table components in Java UI applications.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.0, 17/SEP/2020 */
+ *  @version 2.5, 19/SEP/2020 */
 public class TableUtils {
 
 	/** Get an object from the given list related to the current selected table row.
@@ -42,12 +42,15 @@ public class TableUtils {
 	}
 	
 	/** Get the row count from the given 'model' and sets it in the 'label'.
+	 *  If the given <code>label</code> is null, this method does nothing.
 	 *  @param model - table data
-	 *  @param label - a {@link JLabel} to have its text updated with table size */
+	 *  @param label - a {@link JLabel} to have its text updated with table size. Ignored if 'null' is passed. */
 	public static void updateSize(final DefaultTableModel model, final JLabel label) {
 		
-		String size = Integer.toString(model.getRowCount()); 
-		label.setText(size);
+		if (label != null) {
+			String size = Integer.toString(model.getRowCount()); 
+			label.setText(size);
+		}
 		
 	}
 	
