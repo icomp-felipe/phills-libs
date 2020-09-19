@@ -49,8 +49,12 @@ public class JPaintedPanel extends JPanel {
 	
 	@Override
 	public void paintComponent(Graphics graphics) {
-		Image imagem = new ImageIcon(ResourceManager.getResource(this.resourcePath)).getImage();    
-		graphics.drawImage(imagem, 0, 0, width, height, this);
+		Image image = new ImageIcon(ResourceManager.getResource(this.resourcePath)).getImage();
+		graphics.drawImage(image,
+						   0, 0,
+						   this.width  == 0 ? image.getWidth (null) : this.width ,
+						   this.height == 0 ? image.getHeight(null) : this.height,
+						   this);
 	}
 	
 }
