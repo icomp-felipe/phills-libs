@@ -1,10 +1,16 @@
-package com.phill.libs;
+package com.phill.libs.br;
 
-/** build_20180927 */
-public class CellNumberUtils {
+import com.phill.libs.StringUtils;
 
-	/** Faz o tratamento dos diversos tipos de contatos existentes e retorna apenas os números (com DDD) */
-	public static String extractNumber(String contato) {
+/** Implementa alguns métodos de tratamento de dados para números de telefone brasileiros.
+ *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @version 1.5, 18/SET/2020 */
+public class PhoneNumberUtils {
+
+	/** Faz o tratamento dos diversos tipos de contatos existentes e retorna apenas os números (com DDD).
+	 *  @param contato - número de telefone com ou sem máscara, aqui apenas os dígitos são extraídos
+	 *  @return String contendo apenas os números de telefone. */
+	public static String extractNumber(final String contato) {
 		
 		if (contato != null) {
 			
@@ -46,8 +52,11 @@ public class CellNumberUtils {
 		return null;
 	}
 	
-	/** Recupera um contato e formata com a máscara de contatos (sempre com DDD) */
-	public static String format(String contato, boolean comDDD) {
+	/** Recupera um contato e formata com a máscara de contatos (sempre com DDD).
+	 *  @param contato - string contendo apenas os dígitos do telefone
+	 *  @param comDDD - informa se o contato a ser retornado possuirá DDD ou não
+	 *  @return Uma string com o número de telefone com máscara.  */
+	public static String format(final String contato, final boolean comDDD) {
 		
 		if (contato != null) {
 			
