@@ -59,9 +59,8 @@ public class TimeParser {
 	 *  @return Time in format '12 h 57 min 34 s'. */
 	public static String getHumanReadableTime(long seconds) {
 		
-        if(seconds < 0) {
+        if(seconds < 0)
             return "0s";
-        }
         
         long hours = TimeUnit.SECONDS.toHours(seconds);
         seconds   -= TimeUnit.HOURS.toSeconds(hours);
