@@ -2,8 +2,9 @@ package com.phill.libs.br;
 
 import java.awt.Color;
 import javax.swing.JFormattedTextField;
-import com.phill.libs.GraphicsHelper;
+
 import com.phill.libs.StringUtils;
+import com.phill.libs.ui.GraphicsHelper;
 
 /** Cria um campo de texto formatado com a máscara de CPF e
  *  faz validação de dados inseridos, caso o CPF digitado
@@ -21,7 +22,7 @@ public class CPFTextField extends BRTextField {
 	/** Construtor da classe já aplicando a máscara
 	 *  de CPF e adicionando algoritmo de validação. */
 	public CPFTextField() {
-		super(GraphicsHelper.getInstance().getMascara("###.###.###-##"));
+		super(GraphicsHelper.getInstance().getMask("###.###.###-##"));
 	}
 	
 	/** Realiza a validação de dados na interface gráfica */

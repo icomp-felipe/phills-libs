@@ -2,8 +2,9 @@ package com.phill.libs.br;
 
 import java.awt.Color;
 import javax.swing.JFormattedTextField;
-import com.phill.libs.GraphicsHelper;
+
 import com.phill.libs.StringUtils;
+import com.phill.libs.ui.GraphicsHelper;
 
 /** Cria um campo de texto formatado com a máscara de PIS e
  *  faz validação de dados inseridos, caso o PIS digitado
@@ -21,7 +22,7 @@ public class PISTextField extends BRTextField {
 	/** Construtor da classe já aplicando a máscara
 	 *  de PIS e adicionando algoritmo de validação. */
 	public PISTextField() {
-		super(GraphicsHelper.getInstance().getMascara("###.#####.##-#"));
+		super(GraphicsHelper.getInstance().getMask("###.#####.##-#"));
 	}
 	
 	@Override
