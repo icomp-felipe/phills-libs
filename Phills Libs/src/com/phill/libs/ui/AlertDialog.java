@@ -5,7 +5,7 @@ import javax.swing.*;
 /** This class implements some cool shortcuts to manipulate dialogs
  *  using {@link JOptionPane}. 
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 3.5, 23/JUN/2020 */
+ *  @version 4.0, 19/SEP/2020 */
 public class AlertDialog extends JOptionPane {
 	
 	private static final long serialVersionUID = 7599713151740658702L;
@@ -14,7 +14,7 @@ public class AlertDialog extends JOptionPane {
 	 *  @param title - Custom dialog title
 	 *  @param message - Message to be displayed
 	 *  @see JOptionPane */
-	public static void info(String title, String message) {
+	public static void info(final String title, final String message) {
 		JOptionPane.showMessageDialog(null,message,title,JOptionPane.INFORMATION_MESSAGE);
 	}
 	
@@ -22,7 +22,7 @@ public class AlertDialog extends JOptionPane {
 	 *  title "Info". It also uses the default frame available.
 	 *  @param message - Message to be displayed
 	 *  @see JOptionPane */
-	public static void info(String message) {
+	public static void info(final String message) {
 		info("Info", message);
 	}
 	
@@ -30,7 +30,7 @@ public class AlertDialog extends JOptionPane {
 	 *  @param title - Custom dialog title
 	 *  @param message - Message to be displayed
 	 *  @see JOptionPane */
-	public static void error(String title, String message) {
+	public static void error(final String title, final String message) {
 		JOptionPane.showMessageDialog(null,message,title,JOptionPane.ERROR_MESSAGE);
 	}
 	
@@ -38,15 +38,23 @@ public class AlertDialog extends JOptionPane {
 	 *  title "Error". It also uses the default frame available.
 	 *  @param message - Message to be displayed
 	 *  @see JOptionPane */
-	public static void error(String message) {
+	public static void error(final String message) {
 		error("Error", message);
 	}
 	
 	/** Displays an input dialog with a custom message using {@link JOptionPane}.
 	 *  @param message - custom dialog message
 	 *  @see JOptionPane */
-	public static int dialog(String message) {
+	public static int dialog(final String message) {
 		return JOptionPane.showConfirmDialog(null,message);
+	}
+	
+	/** Displays an input dialog with a custom title and message using {@link JOptionPane}.
+	 *  @param title - custom title
+	 *  @param message - custom dialog message
+	 *  @see JOptionPane */
+	public static int dialog(final String title, final String message) {
+		return JOptionPane.showConfirmDialog(null, message, title, YES_NO_CANCEL_OPTION, QUESTION_MESSAGE, null);
 	}
 	
 	/** Displays a text input dialog with a custom message using {@link JOptionPane}.
