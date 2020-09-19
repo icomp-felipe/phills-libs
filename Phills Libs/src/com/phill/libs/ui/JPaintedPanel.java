@@ -1,14 +1,16 @@
 package com.phill.libs.ui;
 
+import java.io.*;
 import java.awt.*;
+import java.awt.image.*;
 import javax.swing.*;
-
+import javax.imageio.*;
 import com.phill.libs.ResourceManager;
 
 /** This custom implementation of a {@link JPanel} allows you to use an image
  *  file as background of this panel.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 1.5, 18/SET/2020 */
+ *  @version 2.0, 19/SET/2020 */
 public class JPaintedPanel extends JPanel {
 
 	// Serial
@@ -49,12 +51,45 @@ public class JPaintedPanel extends JPanel {
 	
 	@Override
 	public void paintComponent(Graphics graphics) {
-		Image image = new ImageIcon(ResourceManager.getResource(this.resourcePath)).getImage();
-		graphics.drawImage(image,
-						   0, 0,
-						   this.width  == 0 ? image.getWidth (null) : this.width ,
-						   this.height == 0 ? image.getHeight(null) : this.height,
-						   this);
+		
+		// If an exception is thrown, the frame creation is not interrupted
+		try {
+			
+			int width, height;
+			
+			// Reading image
+			BufferedImage background = ImageIO.read(new File(ResourceManager.getResource(this.resourcePath)));
+			
+			super.paintComponent(graphics);
+			
+			// If a fixed width and height was set to the background, it won't be resized...
+			if ((this.width > 0) && (this.height > 0)) {
+				
+				width  = this.width ;
+				height = this.height;
+				
+			}
+			
+			// ...otherwise, a new size is calculated every time the frame has its resolution changed
+			else {
+				
+				double widthScaleFactor  = getWidth () / (double) background.getWidth ();
+				double heightScaleFactor = getHeight() / (double) background.getHeight();
+				double scaleFactor       = (widthScaleFactor > heightScaleFactor) ? heightScaleFactor : widthScaleFactor;
+
+				width  = (int)(background.getWidth () * scaleFactor);
+				height = (int)(background.getHeight() * scaleFactor);
+				
+			}
+
+			// After all, we need to display the changes
+			graphics.drawImage(background, 0, 0, width, height, null);
+			
+		}
+		catch (IOException exception) {
+			System.err.println(":: JPaintedPanel: failed to load background image: " + exception.getMessage());
+		}
+		
 	}
 	
 }
