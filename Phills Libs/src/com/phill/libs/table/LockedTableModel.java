@@ -1,4 +1,4 @@
-package com.phill.libs;
+package com.phill.libs.table;
 
 import javax.swing.table.*;
 
