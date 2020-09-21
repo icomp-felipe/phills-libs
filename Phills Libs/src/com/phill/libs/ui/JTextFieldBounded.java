@@ -1,5 +1,7 @@
 package com.phill.libs.ui;
 
+import java.awt.Toolkit;
+
 import javax.swing.*;
 import javax.swing.text.*;
 
@@ -39,6 +41,8 @@ public class JTextFieldBounded extends JTextField {
 			// Here I only insert a new string if my internal limit has not been reached
 			if ((getLength() + string.length()) <= limit)
 				super.insertString(offset,string,attribute);
+			else
+				Toolkit.getDefaultToolkit().beep();
 			
 		}
 		
