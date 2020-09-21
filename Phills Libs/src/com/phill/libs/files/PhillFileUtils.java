@@ -1,19 +1,28 @@
 package com.phill.libs.files;
 
 import java.io.*;
+import java.text.*;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.text.CharacterIterator;
-import java.text.StringCharacterIterator;
+
+import javax.swing.*;
+import javax.swing.filechooser.*;
 
 /** Implements some useful methods to manipulate files in Java.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 1.5, 17/SEP/2020 */
+ *  @version 2.0, 21/SEP/2020 */
 public class PhillFileUtils {
 
 	// Available comparators (used in 'listFilesOrdered' method)
 	public static final Comparator<File> ASCENDING  = (a1,a2) -> a1.getName().compareToIgnoreCase(a2.getName());
 	public static final Comparator<File> DESCENDING = (a1,a2) -> a1.getName().compareToIgnoreCase(a2.getName());
+	
+	// FileChooser dialog types
+	public static final boolean OPEN_DIALOG = true;
+	public static final boolean SAVE_DIALOG = false;
+	
+	// User home directory
+	public static final File HOME_DIRECTORY = new File(System.getProperty("user.home"));
 	
 	/** Converts a byte count to a human readable format. Useful when displaying file sizes in UI.
 	 *  @param bytes - byte count
@@ -62,6 +71,90 @@ public class PhillFileUtils {
 		}
 		
 		return null;
+	}
+	
+	/** Shows a directory selectiom dialog.
+	 *  @param title - dialog title
+	 *  @param dialogType - can be {@link PhillFileUtils#OPEN_DIALOG} or {@link PhillFileUtils#SAVE_DIALOG}
+	 *  @param suggestion - directory suggestion, it is used to set initial directory value in dialog
+	 *  @return The selected directory or 'null' if the dialog is cancelled. */
+	public static File loadDir(final String title, final boolean dialogType, final File suggestion) {
+		
+		// Creating a new chooser
+		JFileChooser chooser = new JFileChooser();
+		
+		chooser.setDialogTitle(title);
+		chooser.setCurrentDirectory(suggestion);
+		chooser.setMultiSelectionEnabled(false);
+		chooser.setAcceptAllFileFilterUsed(false);
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		
+		// Configures the dialog type
+		int result = (dialogType == OPEN_DIALOG) ? chooser.showOpenDialog(null) : chooser.showSaveDialog(null);
+		
+	    return (result == JFileChooser.APPROVE_OPTION) ? chooser.getSelectedFile() : null;
+	}
+	
+	/** Shows a file selectiom dialog.
+	 *  @param title - dialog title
+	 *  @param filter - file filter
+	 *  @param dialogType - can be {@link PhillFileUtils#OPEN_DIALOG} or {@link PhillFileUtils#SAVE_DIALOG}
+	 *  @param suggestion - directory suggestion, it is used to set initial directory value in dialog. If 'null', the user home directory is selected.
+	 *  @return The selected file or 'null' if the dialog is cancelled.
+	 *  @see FileNameExtensionFilter */
+	public static File loadFile(final String title, final FileNameExtensionFilter filter, final boolean dialogType, final File suggestion) {
+		return loadFile(title, new FileNameExtensionFilter[] {filter}, dialogType, suggestion);
+	}
+	
+	/** Shows a file selectiom dialog.
+	 *  @param title - dialog title
+	 *  @param filters - filters array
+	 *  @param dialogType - can be {@link PhillFileUtils#OPEN_DIALOG} or {@link PhillFileUtils#SAVE_DIALOG}
+	 *  @param suggestion - directory suggestion, it is used to set initial directory value in dialog. If 'null', the user home directory is selected.
+	 *  @return The selected file or 'null' if the dialog is cancelled.
+	 *  @see FileNameExtensionFilter */
+	public static File loadFile(final String title, final FileNameExtensionFilter[] filters, final boolean dialogType, final File suggestion) {
+		
+		File file = null;
+		
+		// Creating a new chooser
+		JFileChooser chooser = new JFileChooser();
+		
+		chooser.setDialogTitle(title);
+		chooser.setCurrentDirectory(suggestion == null ? HOME_DIRECTORY : suggestion);
+		chooser.setMultiSelectionEnabled(false);
+		chooser.setAcceptAllFileFilterUsed(false);
+		
+		// Assigning filters
+		for (FileNameExtensionFilter filter: filters)
+			chooser.addChoosableFileFilter(filter);
+		
+		// Configures the dialog type
+		int result = (dialogType == OPEN_DIALOG) ? chooser.showOpenDialog(null) : chooser.showSaveDialog(null);
+		
+		// If a file was selected...
+		if (result == JFileChooser.APPROVE_OPTION) {
+			
+			// ...then some extension treatments are done here to avoid file name mismatches
+			String filename  = chooser.getSelectedFile().getAbsolutePath();
+		    String extension = "";
+		    
+		    for (FileNameExtensionFilter filter: filters) {
+		    	if (chooser.getFileFilter().equals(filter)) {
+		    		extension = filter.getExtensions()[0];
+		    		break;
+		    	}
+		    }
+		    
+		    if (!filename.endsWith(extension))
+		    	filename += ("." + extension);
+		    
+		    // Finally, the actual file object is created
+		    file = new File(filename);
+			
+		}
+		
+		return file;
 	}
 	
 	/** Reads a file to a string. This method uses UTF-8 encoding do read bytes from file.
