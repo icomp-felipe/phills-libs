@@ -72,12 +72,12 @@ public class StringUtils {
 		return string.matches("^[\\p{L} ]+$");
 	}
 	
-	/** Replaces the reserved words in the given 'string' with data coming from the 'parameters' map.<br>
-	 *  Note: keys described inside the Map object must be the same written in the given 'string'.<br>
+	/** Replaces reserved words coming from the given <code>string</code> with data read from <code>parameters</code> map.<br>
+	 *  Note: keys described inside the Map object must be the same written in the given <code>string</code>.<br>
 	 *  Quick example:<br><br>
 	 *  // Code<br><br>
 	 *  <code>String string = "This is a $OBJECT_TYPE to be replaced with $MAP data!";</code><br>
-	 *  <code>&lt;Map&lt;String,Object&gt; parameters = new HashMap&lt;String,Object&gt;();</code><br><br>
+	 *  <code>Map&lt;String,Object&gt; parameters = new HashMap&lt;String,Object&gt;();</code><br><br>
 	 *  <code>parameters.put("$OBJECT_TYPE","string"); parameters.put("$MAP","map");</code><br><br>
 	 *  <code>System.out.println( StringUtils.populate(string,parameters) );</code><br><br>
 	 *  // Expected output<br><br>

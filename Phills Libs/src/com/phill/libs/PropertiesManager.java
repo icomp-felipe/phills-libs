@@ -1,11 +1,11 @@
 package com.phill.libs;
 
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-/** Faz a interface do programa com suas propriedades em arquivo.
- *  @author Felipe André
- *  @version 1.0, 23/08/2015 */
+/** Implements some useful methods to deal with properties files in Java.
+ *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @version 1.5, 21/SEP/2020 */
 public class PropertiesManager {
 	
 	/** Atualiza uma propriedade */
