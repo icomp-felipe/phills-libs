@@ -1,16 +1,17 @@
-package com.phill.libs;
+package com.phill.libs.mfvapi;
 
 import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 
-import com.phill.libs.ui.AlertDialog;
-
+/** Implements a quick (but functional) mandatory field manager.  */
 public class MandatoryFieldsManager {
 
-	private ArrayList<MandatoryField> permanents;
-	private ArrayList<MandatoryField> conditionals;
+	// Mandatory field lists
+	private final ArrayList<MandatoryField> permanents;
+	private final ArrayList<MandatoryField> conditionals;
 	
+	/** Main constructor initiating internal lists. */
 	public MandatoryFieldsManager() {
 		
 		this.permanents   = new ArrayList<MandatoryField>();
@@ -21,18 +22,34 @@ public class MandatoryFieldsManager {
 	public void addConditional(JLabel label, MandatoryFieldValidator validator, String error_string, boolean start_enabled) {
 		
 		MandatoryField repeated = find(label,conditionals);
-		MandatoryField mf = new MandatoryField(label,validator,error_string,start_enabled,repeated);
+		MandatoryField novo = new MandatoryField(label,validator,error_string,start_enabled);
 		
-		this.conditionals.add(mf);
+		if (repeated == null)
+			this.conditionals.add( novo );
+		else {
+			removeConditional(label);
+			this.conditionals.add   ( novo );
+;		}
+		
+		
 		
 	}
 	
-	public void addPermanent(JLabel label, MandatoryFieldValidator validator, String error_string) {
+	/** Registers a permanent mandatory field.
+	 *  @param label - label to display the mandatory field alert
+	 *  @param validator - validator callback method. It is used to validate and determine if this field is satisfied or not
+	 *  @param errorString - string to be displayed when this field is violated */
+	public void addPermanent(final JLabel label, final MandatoryFieldValidator validator, final String errorString) {
 		
-		MandatoryField repeated = find(label,permanents);
-		MandatoryField mf = new MandatoryField(label,validator,error_string,true,repeated);
+		MandatoryField repeated = find(label, this.permanents);
+		MandatoryField novo       = new MandatoryField(label, validator, errorString, true);
 		
-		this.permanents.add(mf);
+		if (repeated == null)
+			this.permanents.add( novo );
+		else {
+			removePermanent(label);
+			this.permanents.add   ( novo );
+;		}
 		
 	}
 	
@@ -108,6 +125,8 @@ public class MandatoryFieldsManager {
 		
 	}
 	
+	
+	
 	public void validate(MandatoryFieldsListener listener) {
 		
 		for (MandatoryField mf: permanents)
@@ -118,141 +137,13 @@ public class MandatoryFieldsManager {
 				parse(mf,listener);
 		
 	}
-
+	
 	private void parse(MandatoryField mf, MandatoryFieldsListener listener) {
 		
 		String result = mf.validate();
 		
 		if (result != null)
-			listener.append(mf.getComponent(),result);
-		
-	}
-	
-	
-	@Deprecated
-	public void validate(boolean nothing) {
-		
-		StringBuilder error_list = new StringBuilder();
-		
-		for (MandatoryField mf: permanents)
-			parse(mf,error_list);
-		
-		for (MandatoryField mf: conditionals)
-			if (mf.isEnabled())
-				parse(mf,error_list);
-		
-		proccessResults(error_list);
-		
-	}
-	
-	@Deprecated
-	private void proccessResults(StringBuilder error_list) {
-		
-		String errors = error_list.toString().trim();
-		
-		if (!errors.isEmpty())
-			AlertDialog.error("Campos Obrigatórios",errors);
-		
-	}
-	
-	
-	
-	private class MandatoryField {
-		
-		private JLabel label;
-		private MandatoryFieldValidator validator;
-		private String error_string;
-		private boolean enabled;
-		private Color original_color;
-		
-		public MandatoryField(JLabel label, MandatoryFieldValidator validator, String error_string, boolean enabled, MandatoryField repeated) {
-			
-			this.label = label;
-			this.validator = validator;
-			this.error_string = error_string;
-			this.original_color = label.getForeground();
-			this.enabled = enabled;
-			
-			setMandatory(enabled,repeated);
-			
-		}
-		
-		public JLabel getComponent() {
-			return this.label;
-		}
-
-		public String validate() {
-			
-			boolean status = validator.validate();
-			
-			if (status)
-				setNormal();
-			else
-				setError();
-			
-			return (status) ? null : error_string;
-		}
-
-		private void setMandatory(boolean enabled, MandatoryField repeated) {
-			
-			if (repeated != null)
-				if (enabled)
-					repeated.enable();
-				else
-					repeated.disable();
-			else if (enabled)
-				setMandatory();
-			
-		}
-		
-		private void setMandatory() {
-			
-			String new_text = "* " + label.getText();
-			label.setText(new_text);
-			
-		}
-		
-		private void unsetMandatory() {
-			
-			String new_text = label.getText().substring(2);
-			label.setText(new_text);
-			setNormal();
-			
-		}
-		
-		public boolean isEnabled() {
-			return this.enabled;
-		}
-		
-		public boolean equals(JLabel label) {
-			return this.label == label;
-		}
-		
-		public void enable() {
-			
-			if (!isEnabled()) {
-				setMandatory();
-				this.enabled = true;
-			}
-			
-		}
-		
-		public void disable() {
-			
-			if (isEnabled()) {
-				unsetMandatory();
-				this.enabled = false;
-			}
-			
-		}
-		
-		private void setNormal() {
-			label.setForeground(original_color);
-		}
-		
-		private void setError() {
-			label.setForeground(Color.RED);
-		}
+			listener.append(mf.getLabel(),result);
 		
 	}
 	

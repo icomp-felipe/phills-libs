@@ -1,4 +1,4 @@
-package com.phill.libs.exception;
+package com.phill.libs.mfvapi;
 
 public class MandatoryFieldIncompleteException extends Exception {
 

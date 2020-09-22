@@ -1,4 +1,4 @@
-package com.phill.libs;
+package com.phill.libs.mfvapi;
 
 import java.util.*;
 import javax.swing.*;
