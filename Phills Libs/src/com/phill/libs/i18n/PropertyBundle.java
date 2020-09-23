@@ -6,23 +6,106 @@ import java.nio.charset.*;
 
 import com.phill.libs.ResourceManager;
 
+/** Contains the implementation of a custom property resource bundle for making internationalizing your Java Project easier.
+ *  It behaves similarly to the default Java {@link ResourceBundle} implementation, but there are some things you may know:<br>
+ *  1. The inheritance behaves the same as {@link ResourceBundle}s;<br>
+ *  2. Text resource files (refered here as i18n files) are loaded using UTF-8 character encoding;<br>
+ *  3. Here, the i18n files can be stored in any directory of your system, but don't forget to say this to the constructor;<br>
+ *  4. You can choose the i18n files extensions;<br>
+ *  5. You may also want to know the {@link PropertyBundleFiller} class if you want to integrate this class with Java Swing components.
+ *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @version 1.0, 23/SEP/2020 */
 public class PropertyBundle {
 	
-	private final String extension = "lng";
 	private final String baseFile;
+	private String extension;
 	private Locale currentLocale;
 	private Properties bundle;
 	private PropertyBundleFiller filler;
 	
+	/******************************** Constructors Section ***************************************/
+	
+	/** Constructor setting internal attributes and loading i18n files. Here the default extension is set to "lng", and the JVM default locale is loaded.
+	 *  @param resource - base i18n resource path using {@link ResourceManager} format
+	 *  @see ResourceManager#getResource(String) */
+	public PropertyBundle(final String resource) {
+		this(resource, "lng", null);
+	} 
+	
+	/** Constructor setting internal attributes and loading i18n files. Here the default extension is set to "lng".
+	 *  @param resource - base i18n resource path using {@link ResourceManager} format
+	 *  @param locale - locale to be used as base to load i18n files. If 'null' is passed, the JVM default locale is loaded.
+	 *  @see ResourceManager#getResource(String) */
 	public PropertyBundle(final String resource, final Locale locale) {
+		this(resource, "lng", locale);
+	}
+	
+	/** Constructor setting internal attributes and loading i18n files.
+	 *  @param resource - base i18n resource path using {@link ResourceManager} format
+	 *  @param extension - i18n files extension (without .)
+	 *  @param locale - locale to be used as base to load i18n files. If 'null' is passed, the JVM default locale is loaded.
+	 *  @see ResourceManager#getResource(String) */
+	public PropertyBundle(final String resource, final String extension, final Locale locale) {
 		
-		this.baseFile = ResourceManager.getResource(resource);
+		this.extension = extension;
+		this.baseFile  = ResourceManager.getResource(resource);
 		this.currentLocale = (locale != null) ? locale : Locale.getDefault();
 
 		load();
+		
+	}
+	
+	/** Constructor setting internal attributes and loading i18n files. Here the default extension is set to "lng", and the JVM default locale is loaded.
+	 *  @param baseFile - base i18n file path */
+	public PropertyBundle(final File baseFile) {
+		this(baseFile, "lng", null);
+	}
+	
+	/** Constructor setting internal attributes and loading i18n files. Here the default extension is set to "lng".
+	 *  @param baseFile - base i18n file path
+	 *  @param locale - locale to be used as base to load i18n files. If 'null' is passed, the JVM default locale is loaded. */
+	public PropertyBundle(final File baseFile, final Locale locale) {
+		this(baseFile, "lng", locale);
+	}
+	
+	/** Constructor setting internal attributes and loading i18n files.
+	 *  @param baseFile - base i18n file path
+	 *  @param extension - i18n files extension (without .)
+	 *  @param locale - locale to be used as base to load i18n files. If 'null' is passed, the JVM default locale is loaded. */
+	public PropertyBundle(final File baseFile, final String extension, final Locale locale) {
+		
+		this.extension = extension;
+		this.baseFile  = baseFile.getAbsolutePath();
+		this.currentLocale = (locale != null) ? locale : Locale.getDefault();
+
+		load();
+		
 	}
 	
 	/******************************* User Interface Methods **************************************/
+	
+	/** Changes the current <code>locale</code> and updates the internal {@link PropertyBundleFiller} components. */
+	public void changeLocale(final Locale locale) {
+		this.currentLocale = locale;	reload();
+	}
+	
+	/** Internal i18n-located bundle getter.
+	 *  @return A {@link Properties} class containing the i18n-located strings. */
+	public Properties getBundle() {
+		return this.bundle;
+	}
+	
+	/** Current set locale getter.
+	 *  @return The current set locale. */
+	public Locale getCurrentLocate() {
+		return this.currentLocale;
+	}
+	
+	/** Returns the i18n files extension.
+	 *  @return Astring representing the i18n files extension. */
+	public String getExtension() {
+		return this.extension;
+	}
 	
 	/** Returns the i18n string to which the specified key is mapped, or 'null' if the loaded files do contain no mapping for the key.
 	 *  @param key - the key whose associated i18n-string is to be returned
@@ -36,7 +119,7 @@ public class PropertyBundle {
 	 *  @param key - the key whose associated i18n-string array is to be returned
 	 *  @return The string array to which the specified key is mapped, or 'null' if the loaded files do contain no mapping for the key. */
 	public String[] getStringArray(final String key) {
-		return getStringArray(key, ";");
+		return this.getStringArray(key, ";");
 	}
 	
 	/** Returns the i18n string array to which the specified key is mapped, or 'null' if the loaded files do contain no mapping for the key.
@@ -61,7 +144,7 @@ public class PropertyBundle {
 	 *  @param key - the key whose associated i18n-string array is to be returned
 	 *  @return The int array to which the specified key is mapped, or 'null' if the loaded files do contain no mapping for the key. */
 	public int[] getIntArray(final String key) {
-		return getIntArray(key, ";");
+		return this.getIntArray(key, ";");
 	}
 	
 	/** Returns the i18n int array to which the specified key is mapped, or 'null' if the loaded files do contain no mapping for the key.
@@ -74,28 +157,9 @@ public class PropertyBundle {
 		catch (Exception exception) { return null; }
 	}
 	
-	/** Internal i18n-located bundle getter.
-	 *  @return A {@link Properties} class containing the i18n-located strings. */
-	public Properties getBundle() {
-		return this.bundle;
-	}
-	
-	/** Current set locale getter.
-	 *  @return The current set locale. */
-	public Locale getCurrentLocate() {
-		return this.currentLocale;
-	}
-	
 	/** List all pairs (key, value) loaded from the current i18n-located files (for debug purposes). */
 	public void listKeys() {
 		this.bundle.forEach((key,value) -> System.out.printf("Key: '%s' - Value: '%s'\n", key, value));
-	}
-	
-	/******************************** Setters Section ***************************************/
-	
-	/** Changes the current <code>locale</code> and updates the internal {@link PropertyBundleFiller} components. */
-	public void changeLocale(final Locale locale) {
-		this.currentLocale = locale;	reload();
 	}
 	
 	/** Reloads the current-located i18n files and updates the internal {@link PropertyBundleFiller} components. */
