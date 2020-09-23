@@ -1,89 +1,80 @@
 package com.phill.libs;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.*;
+import java.awt.*;
+import javax.swing.*;
 import java.nio.file.*;
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import javax.imageio.*;
+import java.awt.image.*;
+import org.apache.commons.io.FileUtils;
 
-import com.phill.libs.files.PhillFileUtils;
-
-/** Faz a interface do programa com arquivos externos
- *  @author Felipe André
- *  @version 3.0, 23/03/2016 */
+/** Contains some methods to deal with external resources (strings, formats, files, etc)
+ *  in Java applications.<br>
+ *  * Note 1: all methods here use the 'res' directory as base, it must be placed in your Java application project home.<br>
+ *  * Note 2: when it comes to resource parameters, all methods here consider the 'res' directory as base to locate a resource file.
+ *  For example, if your file is located at 'res/config/program.properties', your 'resource' string path will be 'config/program.properties'. 
+ *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @version 3.5, 22/SEP/2020 */
 public class ResourceManager {	
 
-	/** Retorna o diretório de trabalho atual */
+	/** Retrieves the current running project absolute path.
+	 *  @return A string containing a full path to the current running project. */
 	public static String getCurrentPath() {
 		Path currentRelativePath = Paths.get("");
 		return currentRelativePath.toAbsolutePath().toString();
 	}
 	
-	/** Retorna o diretório de trabalho atual */
-	public static String getResource(String resource) {
-		String baseDirectory = getCurrentPath();
-		return (baseDirectory + "/res/" + resource);
-	}
-
-	/** Cria um arquivo a partir de um recurso de sistema */
-	public static File getResourceAsFile(String resource) {
-		return new File(getResource(resource));
-	}
-	
-	/** Carrega um arquivo de texto para uma String */
-	public static String getStringFromFile(File file) throws IOException {
-		return PhillFileUtils.readFileToString(file).trim();
-	}
-	
-	/** Carrega um formato de String (String.format) para uma String */
-	public static String getFormatFromResource(String resource) {
-		try { return getStringFromFile(getResourceAsFile(resource)); }
-		catch (IOException exception) { exception.printStackTrace(); return null; }
-	}
-	
-	/** Carrega um formato de String SQL (String.format) para uma String */
-	private static String getSQLFormat(String sqlResource) throws IOException {
-		return getFormatFromResource("sql/" + sqlResource);
-	}
-	
-	private static String getFormattedString(String resource, Object... args) {
+	/** Loads a String format from the given <code>resource</code>.
+	 *  @param resource - resource string path
+	 *  @return A string format. For more info, please refer to 'See Also' section.
+	 *  @see String#format(String, Object...) */
+	public static String getFormat(final String resource) {
 		
 		try {
-			String format = getFormatFromResource(resource);
+			
+			final File formatFile = getResourceAsFile(resource);
+			final String   format = FileUtils.readFileToString(formatFile,"UTF-8");
+			
+			return format;
+		}
+		catch (IOException exception) {
+			exception.printStackTrace();
+			return null;
+		}
+		
+	}
+	
+	/** Retrieves a <code>resource</code> string and fills it with <code>args</code> data
+	 *  using {@link String#format(String, Object...)}.
+	 *  @param resource - resource string path
+	 *  @param args - same arguments used in {@link String#format(String, Object...)}
+	 *  @return A string with resource coming from <code>resource</code> and data coming from
+	 *  <code>args</code>, or 'null' if an Exception is internally thrown. */
+	private static String getFormattedString(final String resource, final Object... args) {
+		
+		try {
+			String format = getFormat(resource);
 			return String.format(format, args);
 		}
 		catch (Exception exception) {
 			return null;
 		}
-	}
-	
-	public static String getText(Object classe, String resourceName, Object... args) {
-
-		String resourcePath = String.format("text/%s/%s",classe.getClass().getSimpleName(),resourceName);
 		
-		return getFormattedString(resourcePath, args);
 	}
-	
-	/** Carrega um formato SQL e o preenche utilizando a função String.format */
-	public static String getSQLString(String sqlResource, Object... args) throws IOException {
-		String format = getSQLFormat(sqlResource);
-		return String.format(format, args).replace("\"null\"","null").replace("'null'","null");
-	}
-	
-	/** Carrega um formato SQL e o preenche utilizando a função String.format */
-	public static String getSQLString(String format, boolean isFormat, Object... args) throws IOException {
-		return String.format(format, args).replace("\"null\"","null").replace("'null'","null");
-	}
-	
-	/** Carrega um ícone a partir de um recurso do sistema e retorna sua cópia redimensionada */
-	public static Icon getResizedIcon(String resourceIcon, int width, int height) {
+
+	/** Loads a resized {@link Icon} from the given <code>resource</code>.
+	 *  @param resource - resource string path
+	 *  @param width - custom icon width
+	 *  @param height - custom icon height
+	 *  @return An {@link Icon} object loaded from <code>resource</code> path and resized
+	 *  using <code>width</code> and <code>height</code>, or 'null' if an internal Exception is thrown,
+	 *  most of the cases because the icon couldn't be read for some reason. */
+	public static Icon getIcon(final String resource, final int width, final int height) {
 		
 		try {
 			
-			File imagePath = getResourceAsFile(resourceIcon);
-			BufferedImage rawImage = ImageIO.read(imagePath);
+			File iconFile = getResourceAsFile(resource);
+			BufferedImage rawImage = ImageIO.read(iconFile);
 			Image resized = rawImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 			
 			return new ImageIcon(resized);
@@ -92,6 +83,52 @@ public class ResourceManager {
 			return null;
 		}
 		
+	}
+	
+	/** Retrieves a full file path (from the 'res' directory) with the <code>resource</code> included.
+	 *  @param resource - resource string path
+	 *  @return A full path to the <code>resource</code>. */
+	public static String getResource(final String resource) {
+		String baseDirectory = getCurrentPath();
+		return (baseDirectory + "/res/" + resource);
+	}
+
+	/** Retrieves a file (from the 'res' directory) with the <code>resource</code> included.
+	 *  @param resource - resource string path
+	 *  @return A file with the <code>resource</code> included. */
+	public static File getResourceAsFile(final String resource) {
+		return new File(getResource(resource));
+	}
+	
+	/** Retrieves a text resource from the 'text/&lt;object class name&gt;/&lt;resource&gt;' and fills it with
+	 *  <code>args</code> data using {@link String#format(String, Object...)}.
+	 *  @param object - object class (its simple name will be used as base directory to find the resource)
+	 *  @param resource - resource name
+	 *  @param args - same arguments used in {@link String#format(String, Object...)} */
+	public static String getText(final Object object, final String resource, final Object... args) {
+
+		String resourcePath = String.format("text/%s/%s", object.getClass().getSimpleName(), resource);
+		
+		return getFormattedString(resourcePath, args);
+	}
+	
+	/***************** These will be deprecated in a short future **************************/
+	
+	/** Retrieves a format using the 'sql' directory as base.
+	 *  @param resource - SQL format resource */
+	private static String getSQLFormat(final String resource) throws IOException {
+		return getFormat("sql/" + resource);
+	}
+	
+	/** Loads a SQL format and fills it with <code>args</code>
+	 *  data using {@link String#format(String, Object...)}.
+	 *  @param resource - SQL resource string path
+	 *  @param args - same arguments used in {@link String#format(String, Object...)}
+	 *  @return A string with resource coming from <code>resource</code> and data coming from
+	 *  <code>args</code>, or 'null' if an Exception is internally thrown. */
+	public static String getSQLString(final String resource, final Object... args) throws IOException {
+		String format = getSQLFormat(resource);
+		return StringUtils.blankToNull(String.format(format, args));
 	}
 	
 }
