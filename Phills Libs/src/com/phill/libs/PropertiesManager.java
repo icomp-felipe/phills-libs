@@ -10,6 +10,7 @@ public class PropertiesManager {
 	
 	/** Atualiza uma propriedade */
 	public static boolean setProperty(String key, String value) {
+		
 		try {
 			Properties properties = getProperties();
 			properties.setProperty(key, value);
