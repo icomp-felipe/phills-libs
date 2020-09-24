@@ -13,14 +13,13 @@ import com.phill.libs.ResourceManager;
 /** Singleton class used to be a helper to some methods related to graphic
  *  components personalization in Java like frames, textfields and many more.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 4.0, 18/SEP/2020 */
+ *  @version 4.5, 23/SEP/2020 */
 public final class GraphicsHelper {
 	
 	// Current singleton instamce
 	private static GraphicsHelper INSTANCE;
 
 	// Custom fonts
-	private File ttfFont;
 	private Font baseFont, normFont;
 	
 	// Custom color
@@ -58,31 +57,18 @@ public final class GraphicsHelper {
 		
 		try {
 			
-			this.ttfFont  = ResourceManager.getResourceAsFile("fonts/swiss.ttf");
-			this.baseFont = createFont(ttfFont);
-			this.normFont = deriveFont(baseFont, Font.PLAIN, 15);
+			String res = "/com/phill/libs/fonts/swiss.ttf";
+			InputStream stream = GraphicsHelper.class.getResourceAsStream(res); 
+			
+			this.baseFont = Font.createFont(Font.TRUETYPE_FONT, stream);
+			this.normFont = ResourceManager.deriveFont(baseFont, Font.PLAIN, 15);
+			
+			stream.close();
 			
 		} catch (Exception exception) {
 			System.err.println(":: GraphicsHelper: Failed to load resources: " + exception.getMessage());
 		}
 		
-	}
-	
-	/** Loads a TTF font from a file to a {@link Font}.
-	 *  @param resourcePath - font resource path. For more info, please refer to see also section.
-	 *  @see ResourceManager */
-	public Font createFont(final File resourcePath) throws Exception {
-		return Font.createFont(Font.TRUETYPE_FONT, resourcePath);
-	}
-	
-	/** Derives a new {@link Font} from an existing one.
-	 *  @param baseFont - font to be derived
-	 *  @param style - the style for the new font (Font.BOLD, Font.ITALIC, Font.PLAIN, etc...)
-	 *  @param size - the size for the new font
-	 *  @return A new font with the specified style and size.
-	 *  @see ResourceManager */
-	public Font deriveFont(final Font baseFont, final int style, final int size) {
-		return baseFont.deriveFont(style, size);
 	}
 	
 	/** Class default color getter.
@@ -96,37 +82,12 @@ public final class GraphicsHelper {
 	public Font getFont() {
 		return this.normFont;
 	}
-	
-	/** Retorna uma nova fonte com o tamanho especificado */
-	public Font getFont(int size) {
-		return deriveFont(baseFont, Font.PLAIN, size);
-	}
-	
-	/** Creates a {@link MaskFormatter} with the given <code>mask</code> and a single space as placeholder.
-	 *  @param mask - String containing legal characters to be used here. This will throw a ParseException if mask is not valid
-	 *  @return A new {@link MaskFormatter} with parameters described above. */
-	public MaskFormatter getMask(final String mask) {
-		return getmask(mask,' ');
-	}
-	
-	/** Creates a {@link MaskFormatter} with the given <code>mask</code> and <code>placeholder</code>.
-	 *  @param mask - String containing legal characters to be used here. This will throw a ParseException if mask is not valid
-	 *  @param placeholder - character used when formatting if the value does not completely fill the mask
-	 *  @return A new {@link MaskFormatter} with parameters described above. */
-	public MaskFormatter getmask(final String mask, final char placeholder) {
-		
-		MaskFormatter formatter = new MaskFormatter();
-		formatter.setValueContainsLiteralCharacters(false);
-		
-		try {
-			formatter.setMask(mask);
-			formatter.setPlaceholderCharacter(placeholder);
-		}
-		catch (Exception exception) {
-			System.err.println(":: GraphicsHelper: failed to create MaskFormatter: " + exception.getMessage());
-	    }
-		
-		return formatter;  
+
+	/** Returns a new font with the specified <code>size</code>.
+	 *  @param size - font size
+	 *  @return A new font with the specified <code>size</code>. */
+	public Font getFont(final int size) {
+		return ResourceManager.deriveFont(this.baseFont, Font.PLAIN, size);
 	}
 	
 	/** Creates a {@link TitledBorder} with the given <code>title</code> at the
@@ -161,6 +122,35 @@ public final class GraphicsHelper {
 	 *  @param color - new color */
 	public void setColor(final Color color) {
 		this.color = color;
+	}
+	
+	/******************************** Static Methods Section *************************************/
+	
+	/** Creates a {@link MaskFormatter} with the given <code>mask</code> and a single space as placeholder.
+	 *  @param mask - String containing legal characters to be used here. This will throw a ParseException if mask is not valid
+	 *  @return A new {@link MaskFormatter} with parameters described above. */
+	public static MaskFormatter getMask(final String mask) {
+		return getMask(mask,' ');
+	}
+	
+	/** Creates a {@link MaskFormatter} with the given <code>mask</code> and <code>placeholder</code>.
+	 *  @param mask - String containing legal characters to be used here. This will throw a ParseException if mask is not valid
+	 *  @param placeholder - character used when formatting if the value does not completely fill the mask
+	 *  @return A new {@link MaskFormatter} with parameters described above. */
+	public static MaskFormatter getMask(final String mask, final char placeholder) {
+		
+		MaskFormatter formatter = new MaskFormatter();
+		formatter.setValueContainsLiteralCharacters(false);
+		
+		try {
+			formatter.setMask(mask);
+			formatter.setPlaceholderCharacter(placeholder);
+		}
+		catch (Exception exception) {
+			System.err.println(":: GraphicsHelper: failed to create MaskFormatter: " + exception.getMessage());
+	    }
+		
+		return formatter;  
 	}
 	
 	/** Sets an image icon coming from the given <code>resourcePath</code> in the window <code>frame</code>. 

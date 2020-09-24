@@ -14,7 +14,7 @@ import org.apache.commons.io.FileUtils;
  *  * Note 2: when it comes to resource parameters, all methods here consider the 'res' directory as base to locate a resource file.
  *  For example, if your file is located at 'res/config/program.properties', your 'resource' string path will be 'config/program.properties'. 
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 3.5, 22/SEP/2020 */
+ *  @version 4.0, 23/SEP/2020 */
 public class ResourceManager {	
 
 	/** Retrieves the current running project absolute path.
@@ -22,6 +22,21 @@ public class ResourceManager {
 	public static String getCurrentPath() {
 		Path currentRelativePath = Paths.get("");
 		return currentRelativePath.toAbsolutePath().toString();
+	}
+	
+	/** Loads a TTF font from a file to a {@link Font}.
+	 *  @param resourcePath - font resource path. For more info, please refer to see also section. */
+	public static Font getFont(final File resourcePath) throws Exception {
+		return Font.createFont(Font.TRUETYPE_FONT, resourcePath);
+	}
+	
+	/** Derives a new {@link Font} from an existing one.
+	 *  @param baseFont - font to be derived
+	 *  @param style - the style for the new font (Font.BOLD, Font.ITALIC, Font.PLAIN, etc...)
+	 *  @param size - the size for the new font
+	 *  @return A new font with the specified style and size. */
+	public static Font deriveFont(final Font baseFont, final int style, final int size) {
+		return baseFont.deriveFont(style, size);
 	}
 	
 	/** Loads a String format from the given <code>resource</code>.

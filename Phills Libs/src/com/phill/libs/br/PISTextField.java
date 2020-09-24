@@ -12,7 +12,7 @@ import com.phill.libs.ui.GraphicsHelper;
  *  contrário, muda para 'vermelho'. Se o PIS digitado esti
  *  ver incompleto, o campo permanece em 'branco'.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.0, 17/SET/2020
+ *  @version 2.5, 23/SET/2020
  *  @see JFormattedTextField  */
 public class PISTextField extends BRTextField {
 
@@ -22,7 +22,7 @@ public class PISTextField extends BRTextField {
 	/** Construtor da classe já aplicando a máscara
 	 *  de PIS e adicionando algoritmo de validação. */
 	public PISTextField() {
-		super(GraphicsHelper.getInstance().getMask("###.#####.##-#"));
+		super(GraphicsHelper.getMask("###.#####.##-#"));
 	}
 	
 	@Override
