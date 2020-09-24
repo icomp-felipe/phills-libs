@@ -1,130 +1,83 @@
 package com.phill.libs.time;
 
-import java.text.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import org.joda.time.*;
 
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
-import org.joda.time.Years;
+public class PhillsDateUtils {
 
-public class DateUtils {
-
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	
-	private static long getMillisFromDate(String date) throws ParseException {
-		return sdf.parse(date).getTime();
+	/** Compares two dates.
+	 *  @return 0 if the dates are the same;<br>
+	 * 			1 if date1 > date2;<br>
+	 * 		   -1 if date1 < date2. */
+	public static int compare(final DateTime date1, final DateTime date2) {
+		return DateTimeComparator.getDateOnlyInstance().compare(date1, date2);
 	}
 	
-	public static boolean parseDates(String data1, String data2) {
-		try {
-			long date1 = getMillisFromDate(data1);
-			long date2 = getMillisFromDate(data2);
-			return (date1 > date2);
-		}
-		catch (ParseException exception) {
-			return false;
-		}
+	/** Compares two dates using the given <code>format</code>.
+	 *  @return 0 if the dates are the same;<br>
+	 * 			1 if date1 > date2;<br>
+	 * 		   -1 if date1 < date2. */
+	public static int compare(final String date1, final String date2, final String format) {
+		
+		DateTime dt1 = PhillsDateParser.createDate(date1, format);
+		DateTime dt2 = PhillsDateParser.createDate(date2, format);
+		
+		return DateTimeComparator.getDateOnlyInstance().compare(dt1, dt2);
 		
 	}
 	
-	/** Converte uma data no formato DD/MM/YYYY para o formato SQL */
-	public static String parseMySQLDate(String data) {
-		String formattedDate = null;
-		try {
-			Date raw = new SimpleDateFormat("dd/MM/yyyy").parse(data);
-			formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(raw);
-		}
-		catch (ParseException e) {
-			return null;
-		}
-		return formattedDate;
-	}
-	
-	/** Recupera uma data do formato SQL para o formato DD/MM/YYYY */
-	public static String recoverMySQLDate(String data) {
-		String formattedDate = null;
-		try {
-			if (data.equals("0000-00-00")) {
-				return "00/00/0000";
-			}
-			Date raw = new SimpleDateFormat("yyyy-MM-dd").parse(data);
-			formattedDate = new SimpleDateFormat("dd/MM/yyyy").format(raw);
-		}
-		catch (ParseException e) {
-			formattedDate = "00/00/0000";
-		}
-		return formattedDate;
-	}
-	
-	public static String recoverXLSDate(String data) {
-		try {
-			return String.format("%s/%s/%s",data.substring(0,2),data.substring(2,4),data.substring(4,8));
-		}
-		catch (Exception exception) {
-			return data;
-		}
-	}
-	
-	public static int getCurrentYear() {
-		return Calendar.getInstance().get(Calendar.YEAR);
-	}
-	
+	/** Retrieves the current semester as an integer.
+	 *  @return Current semester. */
 	public static int getCurrentSemester() {
-		return new DateTime().getMonthOfYear() / 6 + 1;
+		return new DateTime().getMonthOfYear() / 7 + 1;
 	}
 	
-	public static boolean dataPassada(DateTime date) {
-
-		DateTime today = new DateTime();
-		long duration = getDurationDays(today, date);
-
-		return (duration < 0);
-	}
-
-	public static long getDurationDays(DateTime start, DateTime end) {
-		
-		Duration duration = new Duration(start, end);
-		return duration.getStandardDays();
-		
+	/** Retrieves the current year as an integer.
+	 *  @return Current year. */
+	public static int getCurrentYear() {
+		return new DateTime().getYear();
 	}
 	
-	/** Retorna a data atual do sistema */
-	public static String getSystemDate(String format) {
-		DateFormat dateFormat = new SimpleDateFormat(format);
-		Date date = new Date();
-		return dateFormat.format(date);
+	/** Returns the days passed between the <code>start</code> and <code>end</code> dates.
+	 *  @param start - start date
+	 *  @param end - end date
+	 *  @return the days passed between the <code>start</code> and <code>end</code> dates. */
+	public static long getDurationDays(final DateTime start, final DateTime end) {
+		return new Duration(start, end).getStandardDays();
 	}
 	
-	public static int yearsSince(String date) {
+	/** Gets the milliseconds of the <code>date</code> instant from the Java epoch of 1970-01-01T00:00:00Z.
+	 *  @param date - String date
+	 *  @param format - A date format
+	 *  @return Milliseconds since the Java epoch of 1970-01-01T00:00:00Z, or '-1' if the given <code>date</code> could not be formatted. */
+	public static long getMillis(final String date, final String format) {
+		try { return PhillsDateParser.createDate(date, format).getMillis(); }
+		catch (NullPointerException exception) { return -1L; }
+	}
+	
+	/** Retrieves the current date respecting the given <code>format</code>.
+	 *  @param format - a date format
+	 *  @return The current formatted system date. */
+	public static String now(final String format) {
+		return PhillsDateParser.retrieveDate(new DateTime(), format);
+	}
+	
+	/** Tells if the given <code>date</code> is in the past. Always remember, today is not in the past!
+	 *  @param date - a date
+	 *  @return 'true' if the date is in the past, or 'false' otherwise. */
+	public static boolean past(final DateTime date) {
+		return compare(date, new DateTime()) < 0;
+	}
+	
+	/** Retrieves the years passed since the given <code>date</code> until today.
+	 *  @param date - String date
+	 *  @param format - A date format
+	 *  @return Years since the given <code>date</code> until today. */
+	public static int yearsSince(final String date, final String format) {
 		
-		date = parseMySQLDate(date);
-
-		DateTime current = new DateTime(System.currentTimeMillis());
-		DateTime givendt = new DateTime(date);
+		DateTime current = new DateTime();
+		DateTime givendt = PhillsDateParser.createDate(date, format);
 		
 		return Years.yearsBetween(givendt, current).getYears();
-	}
-	
-	public static List<LocalDate> getDatesBetween(String startDate, String endDate) {
-		
-		List<LocalDate> dateList = new ArrayList<LocalDate>();
-		
-		LocalDate start = LocalDate.parse(startDate);
-		LocalDate end   = LocalDate.parse(endDate);
-		
-		while (!start.isAfter(end)) {
-			
-			dateList.add(start);
-			start = start.plusDays(1L);
-			
-		}
-		
-		return dateList;
-		
 	}
 	
 }

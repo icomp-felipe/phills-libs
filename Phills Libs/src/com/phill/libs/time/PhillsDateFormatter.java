@@ -3,10 +3,10 @@ package com.phill.libs.time;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-/** Contains some known date formats to be used in {@link DateParser} methods.
+/** Contains some known date formats to be used in {@link PhillsDateParser} methods.
  *  @author Felipe André - felipeandresouza@hotmail.com
  *  @version 2.0, 24/SEP/2020 */
-public enum DateFormatter {
+public enum PhillsDateFormatter {
 
 	SQL_DATE_TIME(DateTimeFormat.forPattern("YYYY-MM-dd HH:mm:ss")),
 	SQL_DATE     (DateTimeFormat.forPattern("YYYY-MM-dd")),
@@ -18,7 +18,7 @@ public enum DateFormatter {
 	
 	private DateTimeFormatter formatter;
 	
-	DateFormatter(DateTimeFormatter formatter) {
+	PhillsDateFormatter(DateTimeFormatter formatter) {
 		this.formatter = formatter;
 	}
 
