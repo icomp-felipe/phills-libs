@@ -4,23 +4,25 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
-public class TimeParser {
+/** A helper class to parse dates between Java and JodaTime date.
+ *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @version 2.0, 24/SEP/2020 */
+public class DateParser {
 
-	private static DateTime formatDate(TimeFormatter format, String date) {
-		try { return format.getFormat().parseDateTime(date); }
-		catch (IllegalArgumentException exception) { return null; }
-	}
-	
-	public static String retrieveDate(TimeFormatter format, DateTime date) {
-		return (date == null) ? null : date.toString(format.getFormat());
-	}
-	
-	public static DateTime createDate(Date date) {
+	/** Converts a Java Date to a Joda Time Date.
+	 *  @param date - Java date
+	 *  @return A Joda Time date with info coming from the Java date given as parameter. */
+	public static DateTime createDate(final Date date) {
 		return new DateTime(date);
 	}
 	
-	public static DateTime createDate(String date) {
+	/** Tries to create a Joda Time date parsing the given <code>date</code> string using some known formats.
+	 *  @param date - String date
+	 *  @return A Joda Time date or 'null' if the given <code>date</code> does not match none of the known formats.
+	 *  @see TimeFormatter */
+	public static DateTime createDate(final String date) {
 		
 		if (date == null)
 			return null;
@@ -53,6 +55,15 @@ public class TimeParser {
 		
 	}
 	
+	/** Returns the given <code>date</code> formatted using the given <code>format</code>.
+	 *  @param format - Joda Time date format
+	 *  @param date - String date
+	 *  @return A formatted string date.
+	 *  @see DateTimeFormat */
+	public static String retrieveDate(final TimeFormatter format, final DateTime date) {
+		return (date == null) ? null : date.toString(format.getFormat());
+	}
+	
 	/** Returns a string formatted like '12 h 57 min 34 s'.
 	 *  using a timestamp in 'sec' format.
 	 *  @param seconds - timestamp in seconds
@@ -83,5 +94,17 @@ public class TimeParser {
 
         return(sb.toString());
     }
+	
+	/**************************** Internal Methods Section ***************************************/
+	
+	/** Creates a Joda Time <code>date</code> parsing the given string date using <code>format</code>.
+	 *  @param format - Joda Time date format
+	 *  @param date - String date
+	 *  @return A Joda Time date with data coming from <code>date</code>.
+	 *  @see DateTimeFormat */
+	private static DateTime formatDate(final TimeFormatter format, final String date) {
+		try { return format.getFormat().parseDateTime(date); }
+		catch (IllegalArgumentException exception) { return null; }
+	}
 	
 }
