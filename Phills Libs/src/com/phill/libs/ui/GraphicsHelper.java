@@ -13,7 +13,7 @@ import com.phill.libs.ResourceManager;
 /** Singleton class used to be a helper to some methods related to graphic
  *  components personalization in Java like frames, textfields and many more.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 4.5, 23/SEP/2020 */
+ *  @version 5.0, 24/SEP/2020 */
 public final class GraphicsHelper {
 	
 	// Current singleton instamce
@@ -151,6 +151,12 @@ public final class GraphicsHelper {
 	    }
 		
 		return formatter;  
+	}
+	
+	/** Retrieves the system's screen size.
+	 *  @return System desktop size.  */
+	public static Dimension getScreenSize() {
+		return Toolkit.getDefaultToolkit().getScreenSize();
 	}
 	
 	/** Sets an image icon coming from the given <code>resourcePath</code> in the window <code>frame</code>. 

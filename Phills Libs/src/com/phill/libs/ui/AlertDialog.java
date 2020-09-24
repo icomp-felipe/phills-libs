@@ -6,7 +6,7 @@ import javax.swing.*;
 /** This class implements some cool shortcuts to manipulate dialogs
  *  using {@link JOptionPane}. 
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 4.5, 21/SEP/2020 */
+ *  @version 5.0, 24/SEP/2020 */
 public class AlertDialog extends JOptionPane {
 	
 	private static final long serialVersionUID = 7599713151740658702L;
@@ -118,6 +118,34 @@ public class AlertDialog extends JOptionPane {
 									 			  null, null, null);
 		
 		return (option == JOptionPane.OK_OPTION) ? new String(passwordField.getPassword()) : null;
+	}
+	
+	/** Displays the given <code>message</code> for some <code>secs</code> and then, a newline character
+	 *  is printed in the System standart output.
+	 *  @param message - message to be displayed
+	 *  @param secs - time to print a new line character */
+	public static void timedDisplay(final String message, final int secs) {
+		
+		// Setting the job
+		Runnable job = () -> {
+			
+			try {
+				
+				System.out.println(message);
+				Thread.sleep(secs * 1000L);
+				System.out.println();
+				
+			}
+			catch (InterruptedException exception) {
+				return;
+			}
+			
+		};
+		
+		Thread thread = new Thread(job);
+		thread.setName("AlertDialog.timedDisplay thread");
+		thread.start();
+		
 	}
 	
 }

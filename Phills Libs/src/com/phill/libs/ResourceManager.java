@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.nio.file.*;
 import javax.imageio.*;
 import java.awt.image.*;
+import javax.sound.sampled.*;
+
 import org.apache.commons.io.FileUtils;
 
 /** Contains some methods to deal with external resources (strings, formats, files, etc)
@@ -14,7 +16,7 @@ import org.apache.commons.io.FileUtils;
  *  * Note 2: when it comes to resource parameters, all methods here consider the 'res' directory as base to locate a resource file.
  *  For example, if your file is located at 'res/config/program.properties', your 'resource' string path will be 'config/program.properties'. 
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 4.0, 23/SEP/2020 */
+ *  @version 4.5, 24/SEP/2020 */
 public class ResourceManager {	
 
 	/** Retrieves the current running project absolute path.
@@ -125,6 +127,39 @@ public class ResourceManager {
 		String resourcePath = String.format("text/%s/%s", object.getClass().getSimpleName(), resource);
 		
 		return getFormattedString(resourcePath, args);
+	}
+	
+	/** Plays an audio alert coming from the given <code>resource</code>.
+	 *  @param resource - audio resource */
+	public static void playAudio(final String resource) {
+		
+		Runnable job = () -> {
+			
+			File audioFile = new File(getResource(resource));
+			
+			try {
+				
+				Clip clip = AudioSystem.getClip();
+				
+				clip.open(AudioSystem.getAudioInputStream(audioFile));
+				clip.start();
+				
+				while (!clip.isRunning())
+					Thread.sleep(10);
+				while (clip.isRunning())
+					Thread.sleep(10);
+				
+				clip.close();
+				
+			}
+			catch (Exception exception) { }
+			
+		};
+		
+		Thread thread = new Thread(job);
+		thread.setName("ResourceManager::playAudio thread");
+		thread.start();
+		
 	}
 	
 	/***************** These will be deprecated in a short future **************************/
