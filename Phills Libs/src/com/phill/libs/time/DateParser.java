@@ -21,35 +21,35 @@ public class DateParser {
 	/** Tries to create a Joda Time date parsing the given <code>date</code> string using some known formats.
 	 *  @param date - String date
 	 *  @return A Joda Time date or 'null' if the given <code>date</code> does not match none of the known formats.
-	 *  @see TimeFormatter */
+	 *  @see DateFormatter */
 	public static DateTime createDate(final String date) {
 		
 		if (date == null)
 			return null;
 		
 		if (date.matches(".*-.*-.*:.*:.*"))
-			return formatDate(TimeFormatter.SQL_DATE_TIME, date);
+			return formatDate(DateFormatter.SQL_DATE_TIME, date);
 		
 		else if (date.matches(".*-.*-.*"))
-			return formatDate(TimeFormatter.SQL_DATE, date);
+			return formatDate(DateFormatter.SQL_DATE, date);
 		
 		else if (date.matches(".*//"))
-			return formatDate(TimeFormatter.XLS_DATE, date);
+			return formatDate(DateFormatter.XLS_DATE, date);
 		
 		else if (date.matches(".*/.*/.*:.*:.*"))
-			return formatDate(TimeFormatter.AWT_DATE_TIME, date);
+			return formatDate(DateFormatter.AWT_DATE_TIME, date);
 		
 		else if (date.matches(".*/.*/.*")) {
-			DateTime formattedDate = formatDate(TimeFormatter.AWT_DATE, date);
+			DateTime formattedDate = formatDate(DateFormatter.AWT_DATE, date);
 			
 			if (formattedDate == null)
-				formattedDate = formatDate(TimeFormatter.AWT_DATE_US, date);
+				formattedDate = formatDate(DateFormatter.AWT_DATE_US, date);
 			
 			return formattedDate;
 		}
 		
 		else if (date.length() == 8)
-			return formatDate(TimeFormatter.RAW_DATE, date);
+			return formatDate(DateFormatter.RAW_DATE, date);
 		
 		return null;
 		
@@ -60,7 +60,7 @@ public class DateParser {
 	 *  @param date - String date
 	 *  @return A formatted string date.
 	 *  @see DateTimeFormat */
-	public static String retrieveDate(final TimeFormatter format, final DateTime date) {
+	public static String retrieveDate(final DateFormatter format, final DateTime date) {
 		return (date == null) ? null : date.toString(format.getFormat());
 	}
 	
@@ -102,7 +102,7 @@ public class DateParser {
 	 *  @param date - String date
 	 *  @return A Joda Time date with data coming from <code>date</code>.
 	 *  @see DateTimeFormat */
-	private static DateTime formatDate(final TimeFormatter format, final String date) {
+	private static DateTime formatDate(final DateFormatter format, final String date) {
 		try { return format.getFormat().parseDateTime(date); }
 		catch (IllegalArgumentException exception) { return null; }
 	}
