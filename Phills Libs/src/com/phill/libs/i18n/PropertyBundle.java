@@ -106,6 +106,15 @@ public class PropertyBundle {
 	public String getExtension() {
 		return this.extension;
 	}
+
+	/** Retrieves a string format associated with the given <code>key</code> and fills it with data coming from <code>args</code>.
+	 *  Also the current locale is considered when filling the string.
+	 *  @param key - the key whose associated i18n-string format is to be returned
+	 *  @param args - argumets to fill the formatted string
+	 *  @return A formatted string. */
+	public String getFormattedString(final String key, final Object... args) {
+		return String.format(this.currentLocale, this.bundle.getProperty(key), args);
+	}
 	
 	/** Returns the i18n string to which the specified key is mapped, or 'null' if the loaded files do contain no mapping for the key.
 	 *  @param key - the key whose associated i18n-string is to be returned
