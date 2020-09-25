@@ -112,12 +112,21 @@ public class AlertDialog extends JOptionPane {
 		passwordField.setEchoChar(echoCharacter);
 		panel.add(passwordField);
 		
-		// Building dialog
-		int option = JOptionPane.showOptionDialog(null, panel, title,
-									 			  JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
-									 			  null, null, null);
+		JOptionPane pane = new JOptionPane(panel, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION) {
+			
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void selectInitialValue() {
+				passwordField.requestFocusInWindow();
+			}
+			
+		};
 		
-		return (option == JOptionPane.OK_OPTION) ? new String(passwordField.getPassword()) : null;
+		// Building dialog
+		pane.createDialog(title).setVisible(true);
+		
+		return passwordField.getPassword().length == 0 ? null : new String(passwordField.getPassword());
 	}
 	
 	/** Displays the given <code>message</code> for some <code>secs</code> and then, a newline character
