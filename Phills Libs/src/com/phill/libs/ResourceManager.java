@@ -121,7 +121,8 @@ public class ResourceManager {
 	 *  <code>args</code> data using {@link String#format(String, Object...)}.
 	 *  @param object - object class (its simple name will be used as base directory to find the resource)
 	 *  @param resource - resource name
-	 *  @param args - same arguments used in {@link String#format(String, Object...)} */
+	 *  @param args - same arguments used in {@link String#format(String, Object...)}
+	 *  @return A formatted string. */
 	public static String getText(final Object object, final String resource, final Object... args) {
 
 		String resourcePath = String.format("text/%s/%s", object.getClass().getSimpleName(), resource);
