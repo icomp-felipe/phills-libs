@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 /** Contains useful methods to manipulate {@link String} in Java applications.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.0, 18/SEP/2020 */
+ *  @version 2.1, 25/OCT/2020 */
 public class StringUtils {
 
 	/** Converts all blank or empty fields ('null',"null",'',"") in a SQL string to a SQL null field.
@@ -37,23 +37,30 @@ public class StringUtils {
 	 *  1. The first and second names are always included;<br>
 	 *  2. If the second 'name' has size less than 4, it also includes the 3rd name (if available).
 	 *  @param name - full name
-	 *  @return A short name following the rules descripted above. */
+	 *  @return A short name following the rules descripted above, or the given <code>name</code> if it has not more than two 'subnames'. */
 	public static String getShortName(final String name) {
 		
 		if (name == null)
 			return null;
 		
-		String[] subnames = name.split(" ");
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append(subnames[0] + " ");
-		sb.append(subnames[1]);
+		try {
 			
-		if (subnames[1].length() <= 3)
-			if (subnames.length >= 3 )
-				sb.append(" " + subnames[2]);
-		
-		return sb.toString();
+			String[] subnames = name.split(" ");
+			StringBuilder sb = new StringBuilder();
+			
+			sb.append(subnames[0] + " ");
+			sb.append(subnames[1]);
+				
+			if (subnames[1].length() <= 3)
+				if (subnames.length >= 3 )
+					sb.append(" " + subnames[2]);
+			
+			return sb.toString();
+			
+		}
+		catch (ArrayIndexOutOfBoundsException exception) {
+			return name;
+		}
 		
 	}
 	
