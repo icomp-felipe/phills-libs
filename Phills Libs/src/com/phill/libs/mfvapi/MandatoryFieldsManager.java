@@ -16,7 +16,7 @@ import javax.swing.*;
  *  Alternatively you may want to use a {@link MandatoryFieldsLogger} to get the error strings (already given) thrown when the validation method
  *  returns false or even the internal {@link MandatoryFieldsManager#validate()} method.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.0, 22/SEP/2020 */
+ *  @version 2.1, 11/APR/2021 */
 public class MandatoryFieldsManager {
 
 	// Mandatory field lists
@@ -38,11 +38,12 @@ public class MandatoryFieldsManager {
 	 *  @param label - label to display the mandatory field alert (asterisk)
 	 *  @param validator - validator callback method. It is used to validate and determine if this field is satisfied or not
 	 *  @param errorString - string to be returned by {@link #validate()} when this field is unsatisfied
-	 *  @param startEnabled - defines the initial validation capability status */
-	public void addConditional(final JLabel label, final MandatoryFieldValidator validator, final String errorString, final boolean startEnabled) {
+	 *  @param startEnabled - defines the initial validation capability status
+	 *  @param putAsterisk - puts (or not) an asterisk character at the beginning of the label text */
+	public void addConditional(final JLabel label, final MandatoryFieldValidator validator, final String errorString, final boolean startEnabled, final boolean putAsterisk) {
 		
 		MandatoryField repeated  = find(label,conditionals);
-		MandatoryField mandField = new MandatoryField(label, validator, errorString, startEnabled);
+		MandatoryField mandField = new MandatoryField(label, validator, errorString, startEnabled, putAsterisk);
 		
 		if (repeated == null)
 			this.conditionals.add( mandField );
@@ -57,11 +58,12 @@ public class MandatoryFieldsManager {
 	 *  unregisters it and then registers again, in other words, if the same field is registered more than once, only the last one will take effect. 
 	 *  @param label - label to display the mandatory field alert (asterisk)
 	 *  @param validator - validator callback method. It is used to validate and determine if this field is satisfied or not
-	 *  @param errorString - string to be returned by {@link #validate()} when this field is unsatisfied */
-	public void addPermanent(final JLabel label, final MandatoryFieldValidator validator, final String errorString) {
+	 *  @param errorString - string to be returned by {@link #validate()} when this field is unsatisfied
+	 *  @param putAsterisk - puts (or not) an asterisk character at the beginning of the label text */
+	public void addPermanent(final JLabel label, final MandatoryFieldValidator validator, final String errorString, final boolean putAsterisk) {
 		
 		MandatoryField repeated  = find(label, this.permanents);
-		MandatoryField mandField = new MandatoryField(label, validator, errorString, true);
+		MandatoryField mandField = new MandatoryField(label, validator, errorString, true, putAsterisk);
 		
 		if (repeated == null)
 			this.permanents.add( mandField );

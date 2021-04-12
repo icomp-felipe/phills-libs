@@ -8,7 +8,7 @@ import javax.swing.JLabel;
  *  by this class {@link #validate()} method, a validation activation control attribute (boolean) and the original label
  *  {@link Color}.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.0, 22/SEP/2020 */
+ *  @version 2.1, 11/APR/2021 */
 public class MandatoryField {
 	
 	// Constants
@@ -22,7 +22,7 @@ public class MandatoryField {
 	
 	/** Constructor setting parameters.
 	 *  @see MandatoryField */
-	protected MandatoryField(final JLabel label, final MandatoryFieldValidator validator, final String error_string, final boolean enabled) {
+	protected MandatoryField(final JLabel label, final MandatoryFieldValidator validator, final String error_string, final boolean enabled, final boolean putAsterisk) {
 		
 		this.label = label;
 		this.validator = validator;
@@ -31,7 +31,7 @@ public class MandatoryField {
 		
 		this.enabled = enabled;
 		
-		if (enabled)
+		if (enabled && putAsterisk)
 			setMandatory();
 		
 	}
