@@ -1,12 +1,13 @@
 package com.phill.libs;
 
+import java.text.Normalizer;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** Contains useful methods to manipulate {@link String} in Java applications.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.1, 25/OCT/2020 */
+ *  @version 2.2, 08/APR/2021 */
 public class StringUtils {
 
 	/** Converts all blank or empty fields ('null',"null",'',"") in a SQL string to a SQL null field.
@@ -77,6 +78,13 @@ public class StringUtils {
 	 *  @return 'true' if the given string has only alphabetic characters, or 'false' otherwise. */
 	public static boolean isAlphaStringOnly(final String string) {
 		return string.matches("^[\\p{L} ]+$");
+	}
+	
+	/** Tells if the given 'string' has only alphanumeric characters.
+	 *  @param string - String
+	 *  @return 'true' if the given string has only alphanumeric characters, or 'false' otherwise. */
+	public static boolean isAlphanumericStringOnly(final String string) {
+		return string.matches("[a-zA-Z0-9]*");
 	}
 	
 	/** Replaces reserved words coming from the given <code>string</code> with data read from <code>parameters</code> map.<br>
@@ -195,20 +203,7 @@ public class StringUtils {
 	 *  @return A new string without special characters in vowels an letter c. */
 	public static String wipeSpecialCharacters(final String string) {
 		
-        if (string == null)
-            return string;
-        
-        String wiped = null;
-        
-        char[] source = new char[] { 'ç', 'á', 'à', 'ã', 'â', 'ä', 'é', 'è', 'ê', 'ë', 'í', 'ì', 'î', 'ï', 'ó', 'ò', 'õ', 'ô', 'ö', 'ú', 'ù', 'û', 'ü' };  
-        char[] target = new char[] { 'c', 'a', 'a', 'a', 'a', 'a', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u' };  
-      
-        for (int i = 0; i < source.length; i++) {
-        	wiped = string.replace(source[i], target[i]); 
-        	wiped = string.replace(Character.toUpperCase(source[i]), Character.toUpperCase(target[i]));  
-        }
-        
-        return wiped;  
+        return (string == null) ? string : Normalizer.normalize(string, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
 	
 	/** (EN) Class designed to handle common Brazilian strings like names, adresses and currency.<br>
