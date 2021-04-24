@@ -10,7 +10,7 @@ import javax.swing.filechooser.*;
 
 /** Implements some useful methods to manipulate files in Java.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.0, 21/SEP/2020 */
+ *  @version 2.1, 22/APR/2021 */
 public class PhillFileUtils {
 
 	// Available comparators (used in 'listFilesOrdered' method)
@@ -99,30 +99,35 @@ public class PhillFileUtils {
 	 *  @param title - dialog title
 	 *  @param filter - file filter
 	 *  @param dialogType - can be {@link PhillFileUtils#OPEN_DIALOG} or {@link PhillFileUtils#SAVE_DIALOG}
-	 *  @param suggestion - directory suggestion, it is used to set initial directory value in dialog. If 'null', the user home directory is selected.
+	 *  @param parent - set the current directory of the filechooser. Normally you may pass a directory as parameter, but you can also pass a file, in this case
+	 *  its parent directory is used. If 'null' or if the 'parent' does not exist, then the user home directory is set by default
+	 *  @param suggestion - sets the selected file. If the file's parent directory is not the current directory, changes the current directory to be the file's parent directory
 	 *  @return The selected file or 'null' if the dialog is cancelled.
 	 *  @see FileNameExtensionFilter */
-	public static File loadFile(final String title, final FileNameExtensionFilter filter, final boolean dialogType, final File suggestion) {
-		return loadFile(title, new FileNameExtensionFilter[] {filter}, dialogType, suggestion);
+	public static File loadFile(final String title, final FileNameExtensionFilter filter, final boolean dialogType, final File parent, final File suggestion) {
+		return loadFile(title, new FileNameExtensionFilter[] {filter}, dialogType, parent, suggestion);
 	}
 	
 	/** Shows a file selectiom dialog.
 	 *  @param title - dialog title
 	 *  @param filters - filters array
 	 *  @param dialogType - can be {@link PhillFileUtils#OPEN_DIALOG} or {@link PhillFileUtils#SAVE_DIALOG}
-	 *  @param suggestion - directory suggestion, it is used to set initial directory value in dialog. If 'null', the user home directory is selected.
+	 *  @param parent - set the current directory of the filechooser. Normally you may pass a directory as parameter, but you can also pass a file, in this case
+	 *  its parent directory is used. If 'null' or if the 'parent' does not exist, then the user home directory is set by default
+	 *  @param suggestion - sets the selected file. If the file's parent directory is not the current directory, changes the current directory to be the file's parent directory
 	 *  @return The selected file or 'null' if the dialog is cancelled.
 	 *  @see FileNameExtensionFilter */
-	public static File loadFile(final String title, final FileNameExtensionFilter[] filters, final boolean dialogType, final File suggestion) {
+	public static File loadFile(final String title, final FileNameExtensionFilter[] filters, final boolean dialogType, final File parent, final File suggestion) {
 		
 		File file = null;
 		
 		// Creating a new chooser
 		JFileChooser chooser = new JFileChooser();
 		
-		chooser.setDialogTitle(title);
-		chooser.setCurrentDirectory(suggestion == null ? HOME_DIRECTORY : suggestion);
-		chooser.setMultiSelectionEnabled(false);
+		chooser.setDialogTitle     (title);
+		chooser.setCurrentDirectory(parent);
+		chooser.setSelectedFile    (suggestion);
+		chooser.setMultiSelectionEnabled  (false);
 		chooser.setAcceptAllFileFilterUsed(false);
 		
 		// Assigning filters
