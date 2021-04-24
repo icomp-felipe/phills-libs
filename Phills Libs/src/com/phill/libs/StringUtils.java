@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 /** Contains useful methods to manipulate {@link String} in Java applications.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.2, 08/APR/2021 */
+ *  @version 2.4, 21/APR/2021 */
 public class StringUtils {
 
 	/** Converts all blank or empty fields ('null',"null",'',"") in a SQL string to a SQL null field.
@@ -22,9 +22,11 @@ public class StringUtils {
 	
 	/** Extracts only alphabets from the given string.
 	 *  @param string - String
+	 *  @param ignoreSpaces - enable or disable removing spaces from the string
+	 *  @return A new string containing alphanumeric characters (w/o) spaces.
 	 *  @return A new string containing only alphabets. */
-	public static String extractAlphabet(final String string) {
-		return string.replaceAll("[^A-Za-z]+", "").trim();
+	public static String extractAlphabet(final String string, final String replacement, final boolean ignoreSpaces) {
+		return (string == null) ? null : (ignoreSpaces) ? string.replaceAll("[^A-Za-z]+", replacement).trim() : string.replaceAll("[^A-Za-z ]+", replacement);
 	}
 	
 	/** Extracts only numbers from the given string.
@@ -32,6 +34,16 @@ public class StringUtils {
 	 *  @return A new string containing only numbers. */
 	public static String extractNumbers(final String string) {
 		return (string == null) ? null : string.replaceAll("\\D+","").trim();
+	}
+	
+	/** Extracts only alphanumeric characters from the given string.
+	 *  @param string - String
+	 *  @param replacement - a replacement string to the invalid characters
+	 *  @param ignoreSpaces - enable or disable removing spaces from the string
+	 *  @return A new string containing alphanumeric characters (w/o) spaces.
+	 *  @since 2.3, 21/APR/2021 */
+	public static String extractAlphaNumeric(final String string, final String replacement, final boolean ignoreSpaces) {
+		return (string == null) ? null : (ignoreSpaces) ? string.replaceAll("[^a-zA-Z0-9]", replacement) : string.replaceAll("[^a-zA-Z0-9 ]", replacement);
 	}
 	
 	/** Extracts a short name from a full name following these rules:<br>
@@ -223,6 +235,20 @@ public class StringUtils {
 				return null;
 			
 			return String.format("%s-%s",cep.substring(0,5),cep.substring(5));
+		}
+		
+		/** Aplica a máscara de CNPJ em um 'cnpj' informado.
+		 *  @param cnpj - CNPJ
+		 *  @return Nova string contendo um CNPJ formatado com a máscara de CNPJ.
+		 *  @since 2.4, 21/APR/2021 */
+		public static String formataCNPJ(String cnpj) {
+			
+			cnpj = extractNumbers(cnpj);
+			
+			if ((cnpj == null) || (cnpj.length() != 14))
+				return cnpj;
+			
+			return String.format("%s.%s.%s/%s-%s", cnpj.substring(0,2), cnpj.substring(2,5), cnpj.substring(5,8), cnpj.substring(8,12), cnpj.substring(12) );
 		}
 		
 		/** Normaliza um nome, ou seja, converte suas iniciais em letra maiúscula,
