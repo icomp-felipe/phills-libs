@@ -13,7 +13,7 @@ import com.phill.libs.ui.KeyReleasedListener;
  *  contrário, muda para 'vermelho'. Se o número digitado estiver
  *  ainda incompleto, o campo permanece em 'branco'.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 1.0, 17/SET/2020
+ *  @version 1.1, 24/APR/2021
  *  @see JFormattedTextField  */
 public abstract class BRTextField extends JFormattedTextField {
 
@@ -24,7 +24,7 @@ public abstract class BRTextField extends JFormattedTextField {
 	protected final Color gr_lt  = new Color(0x84efa5);
 	protected final Color rd_lt  = new Color(0xef8e84);
 	
-	public BRTextField(MaskFormatter mascara) {
+	public BRTextField(final MaskFormatter mascara) {
 		super(mascara);
 		this.addKeyListener((KeyReleasedListener) (event) -> parse());
 	}
@@ -34,7 +34,7 @@ public abstract class BRTextField extends JFormattedTextField {
 	 *  Vermelho - caso o número informado tenha sido totalmente preenchido e é inválido;<br>
 	 *  Branco - caso o número ainda esteja em digitação ou não. */
 	@Override
-	public void setText(String string) {
+	public void setText(final String string) {
 		super.setText(string);	parse();
 	}
 	
@@ -43,7 +43,7 @@ public abstract class BRTextField extends JFormattedTextField {
 	 *  Vermelho - caso o número informado tenha sido totalmente preenchido e é inválido;<br>
 	 *  Branco - caso o número ainda esteja em digitação ou não. */
 	@Override
-	public void setValue(Object value) {
+	public void setValue(final Object value) {
 		super.setValue(value);	parse();
 	}
 	
