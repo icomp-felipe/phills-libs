@@ -47,9 +47,9 @@ public class CNPJParser {
 		int[] pesos = new int[] {5,4,3,2,9,8,7,6,5,4,3,2};
 		
 		// Criando o vetor de CNPJ convertendo os dígitos da String recebida para int
-		int[] vetorCNPJ = new int[12];
+		int[] vetorCNPJ = new int[13];
 		
-		for (int i=0; i<12; i++)
+		for (int i=0; i<vetorCNPJ.length; i++)
 			vetorCNPJ[i] = Character.getNumericValue(numeroCNPJ.charAt(i));
 		
 		// Soma de produtos dos vetores
@@ -69,7 +69,7 @@ public class CNPJParser {
 		
 		// Já inicializando a soma de produtos com o produto do 1o dígito verificador
 		// com o seu peso, assim o mesmo vetor do passo anterior pode ser aproveitado
-		somaProd = (primeiroDigito * 2);
+		somaProd = (vetorCNPJ[12] * 2);
 		
 		// Realizando as somas de produtos restantes
 		for (int i=0; i<12; i++)
