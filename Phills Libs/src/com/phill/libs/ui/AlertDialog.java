@@ -43,6 +43,22 @@ public class AlertDialog extends JOptionPane {
 		error("Error", message);
 	}
 	
+	/** Shows a warning message (JOptionPane.WARNING_MESSAGE) using the default Frame.
+	 *  @param title - custom dialog title
+	 *  @param message - message to be displayed
+	 *  @see JOptionPane */
+	public static void warning(final String title, final String message) {
+		JOptionPane.showMessageDialog(null,message,title,JOptionPane.WARNING_MESSAGE);
+	}
+	
+	/** Shows a warning message (JOptionPane.WARNING_MESSAGE) with the default
+	 *  title "Warning". It also uses the default frame available.
+	 *  @param message - message to be displayed
+	 *  @see JOptionPane */
+	public static void warning(final String message) {
+		warning("Warning", message);
+	}
+	
 	/** Displays an input dialog with a custom message using {@link JOptionPane}.
 	 *  @param message - custom dialog message
 	 *  @see JOptionPane */
