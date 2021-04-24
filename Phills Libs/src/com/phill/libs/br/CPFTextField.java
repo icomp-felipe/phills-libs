@@ -12,7 +12,7 @@ import com.phill.libs.ui.GraphicsHelper;
  *  contrário, muda para 'vermelho'. Se o CPF digitado esti
  *  ver incompleto, o campo permanece em 'branco'.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 4.5, 23/SET/2020
+ *  @version 4.6, 24/APR/2021
  *  @see JFormattedTextField  */
 public class CPFTextField extends BRTextField {
 	
@@ -28,7 +28,7 @@ public class CPFTextField extends BRTextField {
 	/** Realiza a validação de dados na interface gráfica */
 	protected void parse() {
 
-		String cpf = StringUtils.extractNumbers(getText());
+		final String cpf = StringUtils.extractNumbers(getText());
 		
 		if (cpf.length() == 11) {
 			
@@ -44,7 +44,7 @@ public class CPFTextField extends BRTextField {
 	}
 	
 	/** Retorna o texto preenchido com ou sem máscara */
-	public String getCPF(boolean apenasNumeros) {
+	public String getCPF(final boolean apenasNumeros) {
 		return (apenasNumeros) ? StringUtils.extractNumbers(getText()) : getText();
 	}
 
