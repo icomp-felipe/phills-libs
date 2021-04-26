@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 /** Contains useful methods to manipulate {@link String} in Java applications.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.4, 21/APR/2021 */
+ *  @version 2.5, 26/APR/2021 */
 public class StringUtils {
 
 	/** Converts all blank or empty fields ('null',"null",'',"") in a SQL string to a SQL null field.
@@ -94,9 +94,10 @@ public class StringUtils {
 	
 	/** Tells if the given 'string' has only alphanumeric characters.
 	 *  @param string - String
+	 *  @param ignoreSpaces - enables or disables the space character verification ' '
 	 *  @return 'true' if the given string has only alphanumeric characters, or 'false' otherwise. */
-	public static boolean isAlphanumericStringOnly(final String string) {
-		return string.matches("[a-zA-Z0-9]*");
+	public static boolean isAlphanumericStringOnly(final String string, final boolean ignoreSpaces) {
+		return ignoreSpaces ? string.matches("[a-zA-Z0-9]*") : string.matches("[a-zA-Z0-9 ]*") ;
 	}
 	
 	/** Replaces reserved words coming from the given <code>string</code> with data read from <code>parameters</code> map.<br>
