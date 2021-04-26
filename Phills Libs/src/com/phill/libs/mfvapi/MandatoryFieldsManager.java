@@ -95,7 +95,7 @@ public class MandatoryFieldsManager {
 	private MandatoryField find(final JLabel label, final ArrayList<MandatoryField> list) {
 		
 		for (MandatoryField field: list)
-			if (field.equals(label))
+			if (field.getLabel().equals(label))
 				return field;
 		
 		return null;
@@ -158,7 +158,7 @@ public class MandatoryFieldsManager {
 		
 		for (MandatoryField field: list) {
 			
-			if (field.equals(label)) {
+			if (field.getLabel().equals(label)) {
 				
 				field.disable();
 				list.remove(field);
