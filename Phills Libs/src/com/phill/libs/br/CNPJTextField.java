@@ -12,7 +12,7 @@ import com.phill.libs.ui.GraphicsHelper;
  *  contrário, muda para 'vermelho'. Se o CNPJ digitado esti-
  *  ver incompleto, o campo permanece em 'branco'.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 1.0, 24/APR/2021
+ *  @version 1.1, 25/APR/2021
  *  @see JFormattedTextField  */
 public class CNPJTextField extends BRTextField {
 	
@@ -41,6 +41,13 @@ public class CNPJTextField extends BRTextField {
 		else
 			setBackground(Color.WHITE);
 		
+	}
+	
+	/** Verifica se o número de CNPJ deste campo é válido.
+	 *  @return Validade do CNPJ (cálculo numérico).
+	 *  @since 1.1, 25/APR/2021 */
+	public boolean valido() {
+		return CNPJParser.parse(getText());
 	}
 	
 	/** Retorna o texto preenchido com ou sem máscara */
