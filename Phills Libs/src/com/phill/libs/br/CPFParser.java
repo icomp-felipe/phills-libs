@@ -42,19 +42,19 @@ public class CPFParser {
 		
 		// Criando o vetor de CPF convertendo os dígitos da String recebida para int
 		int[] vetorCPF = new int[10];
-			
-		for (int i=0; i<vetorCPF.length; i++)
+		
+		for (int i=0; i < vetorCPF.length; i++)
 			vetorCPF[i] = Character.getNumericValue(numeroCPF.charAt(i));
 		
 		// Soma de produtos dos vetores
 		int somaProd = 0;
 		
-		for (int i=0; i<9; i++)
+		for (int i=0; i < pesos.length; i++)
 			somaProd += (vetorCPF[i] * pesos[i]);
 		
 		// Cálculo do 1o dígito verificador
-		int restoDivisao   = (somaProd  % 11);
-		int primeiroDigito = (restoDivisao > 10) ? 0 : (11 - restoDivisao);
+		int restoDivisao   = 11 - (somaProd  % 11);
+		int primeiroDigito = (restoDivisao >= 10) ? 0 : restoDivisao;
 		
 		/**************** Cálculo do 2o dígito verificador ****************/
 
@@ -66,12 +66,12 @@ public class CPFParser {
 		somaProd = (vetorCPF[9] * 2);
 		
 		// Realizando as somas de produtos restantes
-		for (int i=0; i<9; i++)
+		for (int i=0; i < pesos.length; i++)
 			somaProd += (vetorCPF[i] * pesos[i]);
 		
 		// Cálculo do 2o dígito verificador
-	        restoDivisao  = (somaProd  % 11);
-	    int segundoDigito = (restoDivisao > 10) ? 0 : (11 - restoDivisao);
+	        restoDivisao  = 11 - (somaProd  % 11);
+	    int segundoDigito = (restoDivisao >= 10) ? 0 : restoDivisao;
 	
 	    // Validação do dígito verificador
 	 	return (Character.getNumericValue(numeroCPF.charAt( 9)) == primeiroDigito) &&
