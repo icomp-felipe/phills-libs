@@ -1,5 +1,7 @@
 package com.phill.libs;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -7,7 +9,7 @@ import java.util.regex.Pattern;
 
 /** Contains useful methods to manipulate {@link String} in Java applications.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.5, 26/APR/2021 */
+ *  @version 2.6, 30/APR/2021 */
 public class StringUtils {
 
 	/** Converts all blank or empty fields ('null',"null",'',"") in a SQL string to a SQL null field.
@@ -187,6 +189,14 @@ public class StringUtils {
         
         return converted;
     }
+	
+	/** Converts a <code>string</code> to a URL link format.
+	 *  @param string - a string
+	 *  @return A URL encoded string.
+	 *  @since 2.6, 30/APR/2021 */
+	public static String toURL(final String string) {
+		return URLEncoder.encode(string, StandardCharsets.UTF_8);
+	}
 	
 	/** Safe implementation of String::trim method. It does not
 	 *  throw exceptions when the given 'string' is null.
