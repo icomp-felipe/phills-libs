@@ -3,10 +3,12 @@ package com.phill.libs.sys;
 import java.awt.Desktop;
 import java.awt.Toolkit;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /** Contains methods to deal with host OS based features.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.0, 20/SEP/2020 */
+ *  @version 2.1, 03/MAY/2021 */
 public class HostUtils {
 
 	/** Recovers the system current screen resolution width.
@@ -20,6 +22,24 @@ public class HostUtils {
 	public static void openURL(final String url) {
 		
 		try { Desktop.getDesktop().browse(new URL(url).toURI()); }
+		catch (Exception exception) { }
+		
+	}
+	
+	/** Starts a chat using WhatsApp Link API.
+	 *  @param number - complete cellphone number, with country and region codes, numbers only
+	 *  @param message - a message to be sent
+	 *  @since 2.1, 03/MAY/2021 */
+	public static void sendWhatsApp(final String number, final String message) {
+		
+		try {
+			
+			final String encodedMessage = URLEncoder.encode(message, StandardCharsets.UTF_8);
+			final String link = String.format("https://api.whatsapp.com/send?phone=%s&text=%s", number, encodedMessage);
+			
+			Desktop.getDesktop().browse(new URL(link).toURI());
+			
+		}
 		catch (Exception exception) { }
 		
 	}
