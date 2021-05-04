@@ -89,6 +89,15 @@ public class AlertDialog extends JOptionPane {
 		return JOptionPane.showInputDialog(null, message, "Input", JOptionPane.QUESTION_MESSAGE);
 	}
 	
+	/** Displays a text input dialog with a custom message using {@link JOptionPane}.
+	 *  @param title - custom dialog title
+	 *  @param message - message to be displayed
+	 *  @param initialValue - a string to be placed at the prompt text field
+	 *  @see JOptionPane */
+	public static String input(final String title, final String message, final String initialValue) {
+		return (String) JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE, null, null, initialValue);
+	}
+	
 	/** Displays a password input dialog with a custom <code>message</code>.
 	 *  @param message - message to be displayed
 	 *  @return The password typed or 'null' if the dialog is canceled. */
