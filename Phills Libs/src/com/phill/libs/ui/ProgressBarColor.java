@@ -2,6 +2,7 @@ package com.phill.libs.ui;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicProgressBarUI;
 
 /** Custom implementation of a {@link JProgressBar}.
  *  Paints the component foreground according to the given colors and current value.
@@ -24,6 +25,11 @@ public class ProgressBarColor extends JProgressBar {
 		this.plain = plain;
 		this.complete = complete;
 		this.overflow = overflow;
+		
+		setUI(new BasicProgressBarUI() {
+			protected Color getSelectionBackground() { return Color.BLACK; }
+			protected Color getSelectionForeground() { return Color.BLACK; }
+		});
 		
 	}
 	
