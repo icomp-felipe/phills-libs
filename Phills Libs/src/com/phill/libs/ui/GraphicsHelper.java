@@ -20,7 +20,7 @@ public final class GraphicsHelper {
 	private static GraphicsHelper INSTANCE;
 
 	// Custom fonts
-	private Font baseFont, normFont;
+	private Font swissFont, swissDefaultFont, ubuntuFont, ubuntuDefaultFont;
 	
 	// Custom color
 	private Color color;
@@ -57,13 +57,19 @@ public final class GraphicsHelper {
 		
 		try {
 			
-			String res = "/com/phill/libs/fonts/swiss.ttf";
-			InputStream stream = GraphicsHelper.class.getResourceAsStream(res); 
+			String swiss  = "/com/phill/libs/fonts/swiss.ttf";
+			String ubuntu = "/com/phill/libs/fonts/Ubuntu-R.ttf";
 			
-			this.baseFont = Font.createFont(Font.TRUETYPE_FONT, stream);
-			this.normFont = ResourceManager.deriveFont(baseFont, Font.PLAIN, 15);
+			InputStream swissStream  = GraphicsHelper.class.getResourceAsStream(swiss );
+			InputStream ubuntuStream = GraphicsHelper.class.getResourceAsStream(ubuntu);
 			
-			stream.close();
+			this.swissFont = Font.createFont(Font.TRUETYPE_FONT, swissStream);
+			this.swissDefaultFont = ResourceManager.deriveFont(swissFont, Font.PLAIN, 15);
+			
+			this.ubuntuFont        = Font.createFont(Font.TRUETYPE_FONT, ubuntuStream);
+			this.ubuntuDefaultFont = ResourceManager.deriveFont(ubuntuFont, Font.PLAIN, 14);
+			
+			swissStream.close();
 			
 		} catch (Exception exception) {
 			System.err.println(":: GraphicsHelper: Failed to load resources: " + exception.getMessage());
@@ -80,14 +86,27 @@ public final class GraphicsHelper {
 	/** Class default font getter.
 	 *  @return Current class font. */
 	public Font getFont() {
-		return this.normFont;
+		return this.swissDefaultFont;
 	}
 
 	/** Returns a new font with the specified <code>size</code>.
 	 *  @param size - font size
 	 *  @return A new font with the specified <code>size</code>. */
 	public Font getFont(final int size) {
-		return ResourceManager.deriveFont(this.baseFont, Font.PLAIN, size);
+		return ResourceManager.deriveFont(this.swissFont, Font.PLAIN, size);
+	}
+	
+	/** Ubuntu default font getter.
+	 *  @return Current class font. */
+	public Font getUbuntuFont() {
+		return this.ubuntuDefaultFont;
+	}
+	
+	/** Returns a new font with the specified <code>size</code>.
+	 *  @param size - font size
+	 *  @return A new font with the specified <code>size</code>. */
+	public Font getUbuntuFont(final int size) {
+		return ResourceManager.deriveFont(this.ubuntuFont, Font.PLAIN, size);
 	}
 	
 	/** Creates a {@link TitledBorder} with the given <code>title</code> at the
