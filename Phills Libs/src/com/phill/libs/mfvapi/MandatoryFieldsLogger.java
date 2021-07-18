@@ -96,6 +96,11 @@ public class MandatoryFieldsLogger {
 		return this.unsatisfields.size() > 0;
 	}
 	
+	/** @return The amount of errors found during the validation process. */
+	public int getErrorsCount() {
+		return this.unsatisfields.size();
+	}
+	
 	/** Tells if there's any essential unsatisfied field in the pre-registered list.
 	 *  @return 'true' if any of the essential pre-registered fields has not passed the validation algorithm, or 'false' otherwise. */
 	public boolean hasEssentialErrors() {
