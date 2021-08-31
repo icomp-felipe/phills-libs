@@ -145,7 +145,7 @@ public class PhillFileUtils {
 		    String extension = "";
 		    
 		    for (FileNameExtensionFilter filter: filters) {
-		    	if (chooser.getFileFilter().equals(filter)) {
+		    	if ((filter != null) && (chooser.getFileFilter().equals(filter))) {
 		    		extension = filter.getExtensions()[0];
 		    		break;
 		    	}
