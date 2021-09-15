@@ -152,13 +152,13 @@ public final class GraphicsHelper {
 		return getMask(mask,' ');
 	}
 	
-	/** Creates a {@link MaskFormatter} with the given <code>mask</code> and <code>placeholder</code>.
+	/** Creates a {@link ErasableMaskFormatter} with the given <code>mask</code> and <code>placeholder</code>.
 	 *  @param mask - String containing legal characters to be used here. This will throw a ParseException if mask is not valid
 	 *  @param placeholder - character used when formatting if the value does not completely fill the mask
 	 *  @return A new {@link MaskFormatter} with parameters described above. */
 	public static MaskFormatter getMask(final String mask, final char placeholder) {
 		
-		MaskFormatter formatter = new MaskFormatter();
+		MaskFormatter formatter = new ErasableMaskFormatter();
 		formatter.setValueContainsLiteralCharacters(false);
 		
 		try {
