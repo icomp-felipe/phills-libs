@@ -71,7 +71,28 @@ public class MandatoryFieldsManager {
 		else {
 			removePermanent(label);
 			this.permanents.add( mandField );
-;		}
+		}
+		
+	}
+	
+	/** Registers a permanent mandatory field (remains mandatory forever). If this same field has been already registered, this method first
+	 *  unregisters it and then registers again, in other words, if the same field is registered more than once, only the last one will take effect. 
+	 *  @param label - label to display the mandatory field alert (asterisk)
+	 *  @param validator - validator callback method. It is used to validate and determine if this field is satisfied or not
+	 *  @param errorStringFactory - a method interface that generates a dynamic String when this field is unsatisfied
+	 *  @param putAsterisk - puts (or not) an asterisk character at the beginning of the label text */
+	public void addPermanent(final JLabel label, final MandatoryFieldValidator validator, final MandatoryFieldString errorStringFactory, final boolean putAsterisk) {
+		
+		MandatoryField repeated  = find(label, this.permanents);
+		MandatoryField mandField = new MandatoryField(label, validator, errorStringFactory, true, putAsterisk);
+		
+		if (repeated == null)
+			this.permanents.add( mandField );
+		
+		else {
+			removePermanent(label);
+			this.permanents.add( mandField );
+		}
 		
 	}
 	

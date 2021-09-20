@@ -8,12 +8,13 @@ import javax.swing.JLabel;
  *  by this class {@link #validate()} method, a validation activation control attribute (boolean) and the original label
  *  {@link Color}.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.1, 11/APR/2021 */
+ *  @version 2.2, 19/SEP/2021 */
 public class MandatoryField {
 	
 	// Constants
 	private final JLabel label;
 	private final MandatoryFieldValidator validator;
+	private final MandatoryFieldString errorStringFactory;
 	private final String error_string;
 	private final Color original_color;
 	
@@ -21,12 +22,40 @@ public class MandatoryField {
 	private boolean enabled;
 	
 	/** Constructor setting parameters.
+	 *  @param label - a label to be monitored
+	 *  @param validator - a validator method
+	 *  @param error_string - static error String
+	 *  @param enabled - enables or disables validations
+	 *  @param putAsterisk - puts or not an asterisk at the beginning of the JLabel
 	 *  @see MandatoryField */
 	protected MandatoryField(final JLabel label, final MandatoryFieldValidator validator, final String error_string, final boolean enabled, final boolean putAsterisk) {
 		
 		this.label = label;
 		this.validator = validator;
 		this.error_string = error_string;
+		this.errorStringFactory = null;
+		this.original_color = label.getForeground();
+		
+		this.enabled = enabled;
+		
+		if (enabled && putAsterisk)
+			setMandatory();
+		
+	}
+	
+	/** Constructor setting parameters.
+	 *  @param label - a label to be monitored
+	 *  @param validator - a validator method
+	 *  @param errorStringFactory - dynamic error String generator
+	 *  @param enabled - enables or disables validations
+	 *  @param putAsterisk - puts or not an asterisk at the beginning of the JLabel
+	 *  @see MandatoryField */
+	protected MandatoryField(final JLabel label, final MandatoryFieldValidator validator, final MandatoryFieldString errorStringFactory, final boolean enabled, final boolean putAsterisk) {
+		
+		this.label = label;
+		this.validator = validator;
+		this.error_string = null;
+		this.errorStringFactory = errorStringFactory;
 		this.original_color = label.getForeground();
 		
 		this.enabled = enabled;
@@ -102,7 +131,7 @@ public class MandatoryField {
 		else
 			setError();
 		
-		return (valid) ? null : this.error_string;
+		return (valid) ? null : (this.errorStringFactory != null) ? errorStringFactory.getErrorString() : this.error_string;
 	}
 	
 	/******************************* Getters and Setters Section ****************************************/
