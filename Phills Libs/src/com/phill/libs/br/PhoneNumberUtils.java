@@ -4,7 +4,7 @@ import com.phill.libs.StringUtils;
 
 /** Implementa alguns métodos de tratamento de dados para números de telefone brasileiros.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 1.5, 18/SET/2020 */
+ *  @version 1.5, 25/SET/2021 */
 public class PhoneNumberUtils {
 
 	/** Faz o tratamento dos diversos tipos de contatos existentes e retorna apenas os números (com DDD).
@@ -54,30 +54,16 @@ public class PhoneNumberUtils {
 	
 	/** Recupera um contato e formata com a máscara de contatos (sempre com DDD).
 	 *  @param contato - string contendo apenas os dígitos do telefone
-	 *  @param comDDD - informa se o contato a ser retornado possuirá DDD ou não
-	 *  @return Uma string com o número de telefone com máscara.  */
-	public static String format(final String contato, final boolean comDDD) {
+	 *  @return Uma string com o número de telefone com máscara. */
+	public static String format(final String contato) {
 		
 		if (contato != null) {
-			
-			if (comDDD) {
 				
-				if (contato.length() == 10)
-					return String.format("(%s) %s-%s",contato.substring(0,2),contato.substring(2,6),contato.substring(6));
+			if (contato.length() == 10)
+				return String.format("(%s) %s-%s",contato.substring(0,2),contato.substring(2,6),contato.substring(6));
 				
-				if (contato.length() == 11)
-					return String.format("(%s) %s-%s",contato.substring(0,2),contato.substring(2,7),contato.substring(7));
-				
-			}
-			else {
-				
-				if (contato.length() == 10)
-					return String.format("%s-%s",contato.substring(2,6),contato.substring(6));
-				
-				if (contato.length() == 11)
-					return String.format("%s-%s",contato.substring(2,7),contato.substring(7));
-				
-			}
+			if (contato.length() == 11)
+				return String.format("(%s) %s-%s",contato.substring(0,2),contato.substring(2,7),contato.substring(7));
 			
 		}
 		
