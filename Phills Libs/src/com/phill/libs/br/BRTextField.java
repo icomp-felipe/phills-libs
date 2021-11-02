@@ -47,12 +47,6 @@ public abstract class BRTextField extends JFormattedTextField {
 		super.setValue(value);	parse();
 	}
 	
-	/** Verifica se o número contido neste campo é válido.
-	 *  @return 'true' se o número estiver completo e for válido ou 'false' caso contrário. */
-	public boolean valido() {
-		return PISParser.parse(getText());
-	}
-
 	/** Verifica se este campo está vazio, ignorando os caracteres da máscara.
 	 *  @return 'true' se não há nenhum dígito (0-9) neste campo ou 'false' caso contrário. */
 	public boolean isEmpty() {
@@ -61,5 +55,9 @@ public abstract class BRTextField extends JFormattedTextField {
 	
 	/** Realiza a validação de dados na interface gráfica */
 	protected abstract void parse();
+	
+	/** Verifica se o número contido neste campo é válido.
+	 *  @return 'true' se o número estiver completo e for válido ou 'false' caso contrário. */
+	public abstract boolean valido();
 	
 }

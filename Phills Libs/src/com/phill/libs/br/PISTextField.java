@@ -47,5 +47,10 @@ public class PISTextField extends BRTextField {
 	public String getPIS(final boolean apenasNumeros) {
 		return (apenasNumeros) ? StringUtils.extractNumbers(getText()) : getText();
 	}
+
+	@Override
+	public boolean valido() {
+		return PISParser.parse(getText());
+	}
 	
 }

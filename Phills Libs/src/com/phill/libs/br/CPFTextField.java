@@ -48,4 +48,9 @@ public class CPFTextField extends BRTextField {
 		return (apenasNumeros) ? StringUtils.extractNumbers(getText()) : getText();
 	}
 
+	@Override
+	public boolean valido() {
+		return CPFParser.parse(getText());
+	}
+	
 }
