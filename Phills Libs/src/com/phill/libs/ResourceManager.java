@@ -179,7 +179,7 @@ public class ResourceManager {
 	 *  <code>args</code>, or 'null' if an Exception is internally thrown. */
 	public static String getSQLString(final String resource, final Object... args) throws IOException {
 		String format = getSQLFormat(resource);
-		return StringUtils.blankToNull(String.format(format, args));
+		return String.format(format, args);
 	}
 	
 }
