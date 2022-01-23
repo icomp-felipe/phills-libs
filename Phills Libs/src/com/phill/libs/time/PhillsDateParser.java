@@ -9,7 +9,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 /** A helper class to parse dates between Java and JodaTime date.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.0, 24/SEP/2020 */
+ *  @version 2.1, 22/JAN/2022 */
 public class PhillsDateParser {
 
 	/** Converts a Java Date to a Joda Time Date.
@@ -47,7 +47,11 @@ public class PhillsDateParser {
 		if (date == null)
 			return null;
 		
-		if (date.matches(".*-.*-.*:.*:.*"))
+		// SQL DateTime + milliseconds
+		if (date.matches(".*-.*-.*:.*:.*\\..*"))
+			return formatDate(PhillsDateFormatter.SQL_DATE_TIME_MS, date);
+		
+		else if (date.matches(".*-.*-.*:.*:.*"))
 			return formatDate(PhillsDateFormatter.SQL_DATE_TIME, date);
 		
 		else if (date.matches(".*-.*-.*"))
@@ -145,7 +149,7 @@ public class PhillsDateParser {
 	 *  @see DateTimeFormat */
 	private static DateTime formatDate(final PhillsDateFormatter format, final String date) {
 		try { return format.getFormat().parseDateTime(date); }
-		catch (IllegalArgumentException exception) { return null; }
+		catch (IllegalArgumentException exception) { exception.printStackTrace(); return null; }
 	}
 	
 }
