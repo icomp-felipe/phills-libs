@@ -1,5 +1,8 @@
 package com.phill.libs.time;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import org.joda.time.*;
 
 public class PhillsDateUtils {
@@ -66,6 +69,18 @@ public class PhillsDateUtils {
 	 *  @return 'true' if the date is in the past, or 'false' otherwise. */
 	public static boolean past(final DateTime date) {
 		return compare(date, new DateTime()) < 0;
+	}
+	
+	/** Builds a {@link DateTime} object using data from a {@link LocalDate} and a {@link LocalTime}.
+	 *  @return A {@link DateTime} object filled with a <code>date</code> and <code>time</code> or 'null' if <code>date</code> is null.
+	 *  Note: if <code>time</code> is 'null' the time information is filled with zeroes. */
+	public static DateTime toDateTime(final LocalDate date, final LocalTime time) {
+		
+		if (date == null) return null;
+		
+		return (time != null) ? new DateTime(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), time.getHour(), time.getMinute(), time.getSecond())
+				              : new DateTime(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), 0, 0, 0);
+		
 	}
 	
 	/** Retrieves the years passed since the given <code>date</code> until today.
