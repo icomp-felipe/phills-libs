@@ -16,7 +16,7 @@ import org.apache.commons.io.FileUtils;
  *  * Note 2: when it comes to resource parameters, all methods here consider the 'res' directory as base to locate a resource file.
  *  For example, if your file is located at 'res/config/program.properties', your 'resource' string path will be 'config/program.properties'. 
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 4.5, 24/SEP/2020 */
+ *  @version 4.5, 26/JAN/2022 */
 public class ResourceManager {	
 
 	/** Retrieves the current running project absolute path.
@@ -173,13 +173,17 @@ public class ResourceManager {
 	
 	/** Loads a SQL format and fills it with <code>args</code>
 	 *  data using {@link String#format(String, Object...)}.
+	 *  @param turnBlankIntoNull - executes {@link StringUtils#blankToNull(String)} in the result String
 	 *  @param resource - SQL resource string path
 	 *  @param args - same arguments used in {@link String#format(String, Object...)}
 	 *  @return A string with resource coming from <code>resource</code> and data coming from
 	 *  <code>args</code>, or 'null' if an Exception is internally thrown. */
-	public static String getSQLString(final String resource, final Object... args) throws IOException {
+	public static String getSQLString(final boolean turnBlankIntoNull, final String resource, final Object... args) throws IOException {
+		
 		String format = getSQLFormat(resource);
-		return String.format(format, args);
+		String query  = String.format(format, args);
+		
+		return turnBlankIntoNull ? StringUtils.blankToNull(query) : query;
 	}
 	
 }
