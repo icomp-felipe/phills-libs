@@ -17,6 +17,7 @@ public class MandatoryField {
 	private final MandatoryFieldString errorStringFactory;
 	private final String error_string;
 	private final Color original_color;
+	private final boolean putAsterisk;
 	
 	// Mandatory field activation status
 	private boolean enabled;
@@ -37,6 +38,7 @@ public class MandatoryField {
 		this.original_color = label.getForeground();
 		
 		this.enabled = enabled;
+		this.putAsterisk = putAsterisk;
 		
 		if (enabled && putAsterisk)
 			setMandatory();
@@ -59,6 +61,7 @@ public class MandatoryField {
 		this.original_color = label.getForeground();
 		
 		this.enabled = enabled;
+		this.putAsterisk = putAsterisk;
 		
 		if (enabled && putAsterisk)
 			setMandatory();
@@ -72,11 +75,15 @@ public class MandatoryField {
 	 *  Note: if the label text already begins with the '* ' pattern this method does nothing. */
 	private void setMandatory() {
 
-		final String labelText = this.label.getText();
+		if (putAsterisk) {
+			
+			final String labelText = this.label.getText();
 
-		// Little treatment to avoid asterisk mess
-		if (!labelText.matches("\\* .*"))
-			this.label.setText("* " + labelText);
+			// Little treatment to avoid asterisk mess
+			if (!labelText.matches("\\* .*"))
+				this.label.setText("* " + labelText);
+			
+		}
 		
 	}
 	
@@ -87,11 +94,15 @@ public class MandatoryField {
 	 *  this method only resets the label color. */
 	private void unsetMandatory() {
 		
-		final String labelText = this.label.getText();
-		
-		// Little treatment to avoid asterisk mess
-		if (labelText.matches("\\* .*"))
-			this.label.setText(labelText.substring(2));
+		if (putAsterisk) {
+			
+			final String labelText = this.label.getText();
+			
+			// Little treatment to avoid asterisk mess
+			if (labelText.matches("\\* .*"))
+				this.label.setText(labelText.substring(2));
+			
+		}
 		
 		setNormal();
 		
