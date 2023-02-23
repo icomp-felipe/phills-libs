@@ -121,8 +121,13 @@ public class PropertiesManager {
 			
 			props.setProperty(key, value);
 			
-			final FileOutputStream   stream = new FileOutputStream(resource);
+			final File propsFile = new File((resource == null) ? ResourceManager.getResource(CUSTOM_RES) : ResourceManager.getResource(resource));
+			propsFile.mkdirs();
+			
+			final FileOutputStream   stream = new FileOutputStream(propsFile);
 			final OutputStreamWriter writer = new OutputStreamWriter(stream, Charset.forName("UTF-8"));
+			
+			System.out.println(propsFile);
 			
 			props.store(writer, null);
 			
@@ -130,7 +135,8 @@ public class PropertiesManager {
 			
 			return true;
 		}
-		catch (IOException exception) {
+		catch (Exception exception) {
+			exception.printStackTrace();
 			return false;
 		}
 		

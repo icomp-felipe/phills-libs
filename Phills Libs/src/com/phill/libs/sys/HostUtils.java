@@ -2,6 +2,7 @@ package com.phill.libs.sys;
 
 import java.awt.Desktop;
 import java.awt.Toolkit;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -32,15 +33,36 @@ public class HostUtils {
 	 *  @since 2.1, 03/MAY/2021 */
 	public static void sendWhatsApp(final String number, final String message) {
 		
-		try {
+		if (number != null && !number.isBlank()) {
 			
-			final String encodedMessage = URLEncoder.encode(message, StandardCharsets.UTF_8);
-			final String link = String.format("https://api.whatsapp.com/send?phone=%s&text=%s", number, encodedMessage);
-			
-			Desktop.getDesktop().browse(new URL(link).toURI());
+			try {
+				
+				final String encodedMessage = URLEncoder.encode(message == null ? "" : message, StandardCharsets.UTF_8);
+				final String link = String.format("https://api.whatsapp.com/send?phone=%s&text=%s", number, encodedMessage);
+				
+				Desktop.getDesktop().browse(new URL(link).toURI());
+				
+			}
+			catch (Exception exception) { }
 			
 		}
-		catch (Exception exception) { }
+		
+	}
+
+	public static void sendEmail(final String email) {
+		
+		if (email != null && !email.isBlank()) {
+			
+			try {
+				
+				final String link = String.format("mailto:%s", email);
+				
+				Desktop.getDesktop().mail(URI.create(link));
+				
+			}
+			catch (Exception exception) { exception.printStackTrace();  }
+			
+		}
 		
 	}
 	
