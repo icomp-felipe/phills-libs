@@ -13,7 +13,7 @@ public class TableUtils {
 	 *  @param table - table filled with data
 	 *  @param list - list of objects (source of the given table data)
 	 *  @return An object corresponding to the selected table row. */
-	public static <T> T getSelected(final JTable table, final ArrayList<T> list) {
+	public static <T> T getSelected(final JTable table, final List<T> list) {
 		
 		int index = table.getSelectedRow();
 		return (index == -1) ? null : list.get(index);
