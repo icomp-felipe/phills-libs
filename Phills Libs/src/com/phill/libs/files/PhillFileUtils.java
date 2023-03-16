@@ -1,6 +1,8 @@
 package com.phill.libs.files;
 
+import java.awt.Component;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.*;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -10,7 +12,7 @@ import javax.swing.filechooser.*;
 
 /** Implements some useful methods to manipulate files in Java.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.1, 22/APR/2021 */
+ *  @version 2.2, 16/MAR/2023 */
 public class PhillFileUtils {
 
 	// Available comparators (used in 'listFilesOrdered' method)
@@ -74,11 +76,12 @@ public class PhillFileUtils {
 	}
 	
 	/** Shows a directory selectiom dialog.
+	 *  @param parentWindow - determines the <code>Frame</code> in which the dialog is displayed; if <code>null</code>, or if the <code>parentComponent</code> has no <code>Frame</code>, a default <code>Frame</code> is used
 	 *  @param title - dialog title
 	 *  @param dialogType - can be {@link PhillFileUtils#OPEN_DIALOG} or {@link PhillFileUtils#SAVE_DIALOG}
 	 *  @param suggestion - directory suggestion, it is used to set initial directory value in dialog
 	 *  @return The selected directory or 'null' if the dialog is cancelled. */
-	public static File loadDir(final String title, final boolean dialogType, final File suggestion) {
+	public static File loadDir(final Component parentWindow, final String title, final boolean dialogType, final File suggestion) {
 		
 		// Creating a new chooser
 		JFileChooser chooser = new JFileChooser();
@@ -90,12 +93,13 @@ public class PhillFileUtils {
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		
 		// Configures the dialog type
-		int result = (dialogType == OPEN_DIALOG) ? chooser.showOpenDialog(null) : chooser.showSaveDialog(null);
+		int result = (dialogType == OPEN_DIALOG) ? chooser.showOpenDialog(parentWindow) : chooser.showSaveDialog(parentWindow);
 		
 	    return (result == JFileChooser.APPROVE_OPTION) ? chooser.getSelectedFile() : null;
 	}
 	
 	/** Shows a file selectiom dialog.
+	 *  @param parentWindow - determines the <code>Frame</code> in which the dialog is displayed; if <code>null</code>, or if the <code>parentComponent</code> has no <code>Frame</code>, a default <code>Frame</code> is used
 	 *  @param title - dialog title
 	 *  @param filter - file filter
 	 *  @param dialogType - can be {@link PhillFileUtils#OPEN_DIALOG} or {@link PhillFileUtils#SAVE_DIALOG}
@@ -104,11 +108,12 @@ public class PhillFileUtils {
 	 *  @param suggestion - sets the selected file. If the file's parent directory is not the current directory, changes the current directory to be the file's parent directory
 	 *  @return The selected file or 'null' if the dialog is cancelled.
 	 *  @see FileNameExtensionFilter */
-	public static File loadFile(final String title, final FileNameExtensionFilter filter, final boolean dialogType, final File parent, final File suggestion) {
-		return loadFile(title, new FileNameExtensionFilter[] {filter}, dialogType, parent, suggestion);
+	public static File loadFile(final Component parentWindow, final String title, final FileNameExtensionFilter filter, final boolean dialogType, final File parent, final File suggestion) {
+		return loadFile(parentWindow, title, new FileNameExtensionFilter[] {filter}, dialogType, parent, suggestion);
 	}
 	
 	/** Shows a file selectiom dialog.
+	 *  @param parentWindow - determines the <code>Frame</code> in which the dialog is displayed; if <code>null</code>, or if the <code>parentComponent</code> has no <code>Frame</code>, a default <code>Frame</code> is used
 	 *  @param title - dialog title
 	 *  @param filters - filters array
 	 *  @param dialogType - can be {@link PhillFileUtils#OPEN_DIALOG} or {@link PhillFileUtils#SAVE_DIALOG}
@@ -117,7 +122,7 @@ public class PhillFileUtils {
 	 *  @param suggestion - sets the selected file. If the file's parent directory is not the current directory, changes the current directory to be the file's parent directory
 	 *  @return The selected file or 'null' if the dialog is cancelled.
 	 *  @see FileNameExtensionFilter */
-	public static File loadFile(final String title, final FileNameExtensionFilter[] filters, final boolean dialogType, final File parent, final File suggestion) {
+	public static File loadFile(final Component parentWindow, final String title, final FileNameExtensionFilter[] filters, final boolean dialogType, final File parent, final File suggestion) {
 		
 		File file = null;
 		
@@ -135,7 +140,7 @@ public class PhillFileUtils {
 			chooser.addChoosableFileFilter(filter);
 		
 		// Configures the dialog type
-		int result = (dialogType == OPEN_DIALOG) ? chooser.showOpenDialog(null) : chooser.showSaveDialog(null);
+		int result = (dialogType == OPEN_DIALOG) ? chooser.showOpenDialog(parentWindow) : chooser.showSaveDialog(parentWindow);
 		
 		// If a file was selected...
 		if (result == JFileChooser.APPROVE_OPTION) {
@@ -167,7 +172,7 @@ public class PhillFileUtils {
 	 *  @return A String with all text coming from the given file.
 	 *  @throws IOException if the file file could not be read. */
 	public static String readFileToString(File file) {
-		try { return org.apache.commons.io.FileUtils.readFileToString(file,"UTF-8"); }
+		try { return org.apache.commons.io.FileUtils.readFileToString(file, StandardCharsets.UTF_8); }
 		catch (IOException exception) { exception.printStackTrace(); return null; }
 	}
 	
