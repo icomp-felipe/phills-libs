@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 /** Contains useful methods to manipulate {@link String} in Java applications.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.6, 30/APR/2021 */
+ *  @version 2.7, 25/MAR/2023 */
 public class StringUtils {
 
 	/** Converts all blank or empty fields ('null',"null",'',"") in a SQL string to a SQL null field.
@@ -91,7 +91,14 @@ public class StringUtils {
 	 *  @param string - String
 	 *  @return 'true' if the given string has only alphabetic characters, or 'false' otherwise. */
 	public static boolean isAlphaStringOnly(final String string) {
-		return string.matches("^[\\p{L} ]+$");
+		return (string == null) ? false : string.matches("^[\\p{L} ]+$");
+	}
+	
+	/** Tells if the given 'string' has only numeric characters.
+	 *  @param string - String
+	 *  @return 'true' if the given string has only numeric characters, or 'false' otherwise. */
+	public static boolean isNumericOnly(final String string) {
+		return (string == null) ? false : string.matches("\\d+");
 	}
 	
 	/** Tells if the given 'string' has only alphanumeric characters.
@@ -99,7 +106,7 @@ public class StringUtils {
 	 *  @param ignoreSpaces - enables or disables the space character verification ' '
 	 *  @return 'true' if the given string has only alphanumeric characters, or 'false' otherwise. */
 	public static boolean isAlphanumericStringOnly(final String string, final boolean ignoreSpaces) {
-		return ignoreSpaces ? string.matches("[a-zA-Z0-9]*") : string.matches("[a-zA-Z0-9 ]*") ;
+		return (string == null) ? false : ignoreSpaces ? string.matches("[a-zA-Z0-9]*") : string.matches("[a-zA-Z0-9 ]*") ;
 	}
 	
 	/** Replaces reserved words coming from the given <code>string</code> with data read from <code>parameters</code> map.<br>
