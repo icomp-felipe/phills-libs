@@ -3,16 +3,21 @@ package com.phill.libs.files;
 import java.awt.Component;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.*;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.swing.*;
 import javax.swing.filechooser.*;
 
 /** Implements some useful methods to manipulate files in Java.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.2, 16/MAR/2023 */
+ *  @version 2.3, 27/MAR/2023 */
 public class PhillFileUtils {
 
 	// Available comparators (used in 'listFilesOrdered' method)
@@ -25,6 +30,29 @@ public class PhillFileUtils {
 	
 	// User home directory
 	public static final File HOME_DIRECTORY = new File(System.getProperty("user.home"));
+	
+    /** Builds a list of files from <code>sourceDir</code> that matches the desired <code>extension</code>.
+     *  @param sourceDir - source directory
+     *  @param extension - file extension to be filtered
+     *  @return A list with files containing only the file <code>extension</code> specified. */
+    public static List<File> filterByExtension(final File sourceDir, final String extension) throws IOException {
+    	
+    	if (!sourceDir.isDirectory())
+    		throw new IllegalArgumentException("Source must be a directory!");
+    	
+    	final List<File> filtered;
+
+    	try (Stream<Path> walker = Files.walk(sourceDir.toPath())) {
+    		
+    		filtered = walker.filter (path -> !Files.isDirectory(path))
+    				         .map    (path -> path.toFile())
+    				         .filter (file -> file.getName().toLowerCase().endsWith(extension.toLowerCase()))
+    				         .collect(Collectors.toList());
+    		
+    	}
+    	
+    	return filtered;
+    }
 	
 	/** Converts a byte count to a human readable format. Useful when displaying file sizes in UI.
 	 *  @param bytes - byte count
