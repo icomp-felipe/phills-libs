@@ -42,7 +42,7 @@ public class PhillFileUtils {
     	
     	final List<File> filtered;
 
-    	try (Stream<Path> walker = Files.walk(sourceDir.toPath())) {
+    	try (Stream<Path> walker = Files.walk(sourceDir.toPath(), 1)) {
     		
     		filtered = walker.filter (path -> !Files.isDirectory(path))
     				         .map    (path -> path.toFile())
