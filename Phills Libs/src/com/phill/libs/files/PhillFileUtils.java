@@ -95,7 +95,9 @@ public class PhillFileUtils {
 		if ((directory != null) && (order != null)) {
 			
 			File[] fileList = directory.listFiles();
-			Arrays.sort(fileList,order);
+			
+			if (fileList != null)
+				Arrays.sort(fileList,order);
 			
 			return fileList;
 		}
