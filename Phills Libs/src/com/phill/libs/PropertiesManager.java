@@ -7,7 +7,7 @@ import java.nio.charset.*;
 /** Contains a static implementation of a {@link Properties} manager for Java.
  *  Also, the UTF-8 character encoding is used by default in all methods.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 2.5, 24/SEP/2020 */
+ *  @version 2.6, 20/APR/2023 */
 public class PropertiesManager {
 
 	private static final String DELIMITER  = ";";
@@ -20,19 +20,14 @@ public class PropertiesManager {
 	 *  Note: here the method will search for 'res/config/program.properties' if 'null' is passed as resource parameter.
 	 *  @param key - the property key
 	 *  @param resource - the resource file using {@link ResourceManager} format
-	 *  @return The value in the property read with the specified key value. */
-	public static String getString(final String key, final String resource) {
+	 *  @return The value in the property read with the specified key value.
+	 *  @throws IOException when the properties file could not be loaded for some reason. */
+	public static String getString(final String key, final String resource) throws IOException {
 		
-		try {
+		Properties properties = getProperties(resource);
+		String property = properties.getProperty(key);
 			
-			Properties properties = getProperties(resource);
-			String property = properties.getProperty(key);
-			
-			return property;
-		}
-		catch (IOException exception) {
-			return null;
-		}
+		return property;
 		
 	}
 	
@@ -42,8 +37,9 @@ public class PropertiesManager {
 	 *  Note 2: by default, the ; character is used to split the keys in the text array.
 	 *  @param key - the property key
 	 *  @param resource - the resource file using {@link ResourceManager} format
-	 *  @return The value in the property read with the specified key value as a String array. */
-	public static String[] getStringArray(final String key, final String resource) {
+	 *  @return The value in the property read with the specified key value as a String array.
+	 *  @throws IOException when the properties file could not be loaded for some reason. */
+	public static String[] getStringArray(final String key, final String resource) throws IOException {
 		return getStringArray(key, DELIMITER, resource);
 	}
 	
@@ -53,32 +49,25 @@ public class PropertiesManager {
 	 *  @param key - the property key
 	 *  @param delimiter - the delimiting regular expression used to split the keys in the text array
 	 *  @param resource - the resource file using {@link ResourceManager} format
-	 *  @return The value in the property read with the specified key value as a String array. */
-	public static String[] getStringArray(final String key, final String delimiter, final String resource) {
+	 *  @return The value in the property read with the specified key value as a String array.
+	 *  @throws IOException when the properties file could not be loaded for some reason. */
+	public static String[] getStringArray(final String key, final String delimiter, final String resource) throws IOException {
 		
-		try {
+		Properties properties = getProperties(resource);
+		String property = properties.getProperty(key);
 			
-			Properties properties = getProperties(resource);
-			String property = properties.getProperty(key);
-			
-			return property.split(delimiter);
-			
-		}
-		catch (IOException exception) {
-			return null;
-		}
+		return property.split(delimiter);
 		
 	}
 	
-	/** Searches for the property with the specified key in the property file read. The method
-	 *  returns '-1' if the property is not found or if the property file could not be read.<br>
+	/** Searches for the property with the specified key in the property file read.<br>
 	 *  Note: here the method will search for 'res/config/program.properties' if 'null' is passed as resource parameter.
 	 *  @param key - the property key
 	 *  @param resource - the resource file using {@link ResourceManager} format
-	 *  @return The value in the property read with the specified key value as an integer. */
-	public static int getInt(final String key, final String resource) {
-		try { return Integer.parseInt(getString(key, resource)); }
-		catch (NumberFormatException exception) { return -1; }
+	 *  @return The value in the property read with the specified key value as an integer.
+	 *  @throws IOException when the properties file could not be loaded for some reason. */
+	public static int getInt(final String key, final String resource) throws IOException {
+		return Integer.parseInt(getString(key, resource));
 	}
 	
 	/** Searches for the property int array with the specified key in the property file read. The method
@@ -87,8 +76,9 @@ public class PropertiesManager {
 	 *  Note 2: by default, the ; character is used to split the keys in the text array.
 	 *  @param key - the property key
 	 *  @param resource - the resource file using {@link ResourceManager} format
-	 *  @return The value in the property read with the specified key value as a integer array. */
-	public static int[] getIntArray(final String key, final String resource) {
+	 *  @return The value in the property read with the specified key value as a integer array.
+	 *  @throws IOException when the properties file could not be loaded for some reason. */
+	public static int[] getIntArray(final String key, final String resource) throws IOException {
 		return getIntArray(key, DELIMITER, resource);
 	}
 	
@@ -98,11 +88,11 @@ public class PropertiesManager {
 	 *  @param key - the property key
 	 *  @param delimiter - the delimiting regular expression used to split the keys in the text array
 	 *  @param resource - the resource file using {@link ResourceManager} format
-	 *  @return The value in the property read with the specified key value as a integer array. */
-	public static int[] getIntArray(final String key, final String delimiter, final String resource) {
+	 *  @return The value in the property read with the specified key value as a integer array.
+	 *  @throws IOException when the properties file could not be loaded for some reason. */
+	public static int[] getIntArray(final String key, final String delimiter, final String resource) throws IOException {
 		String[] numbers = getStringArray(key,delimiter,resource);
-		try { return Arrays.stream(numbers).mapToInt(Integer::parseInt).toArray(); }
-		catch (Exception exception) { return null; }
+		return Arrays.stream(numbers).mapToInt(Integer::parseInt).toArray();
 	}
 	
 	/****************************** Setter Methods Section ***************************************/	
@@ -112,34 +102,23 @@ public class PropertiesManager {
 	 *  @param key - the key to be placed into this property list
 	 *  @param value - the value corresponding to key
 	 *  @param resource - the resource file using {@link ResourceManager} format
-	 *  @return 'true' if the key and value could be stored, 'false' otherwise.  */
-	public static boolean setString(final String key, final String value, final String resource) {
+	 *  @throws IOException when the properties file could not be written for some reason. */
+	public static void setString(final String key, final String value, final String resource) throws IOException {
 		
-		try {
-			
-			final Properties props = getProperties(resource);
-			
-			props.setProperty(key, value);
-			
-			final File propsFile = new File((resource == null) ? ResourceManager.getResource(CUSTOM_RES) : ResourceManager.getResource(resource));
-			propsFile.mkdirs();
-			
-			final FileOutputStream   stream = new FileOutputStream(propsFile);
-			final OutputStreamWriter writer = new OutputStreamWriter(stream, Charset.forName("UTF-8"));
-			
-			System.out.println(propsFile);
-			
-			props.store(writer, null);
-			
-			stream.close();
-			
-			return true;
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-			return false;
-		}
+		// Retrieving properties object and setting new property
+		final Properties props = getProperties(resource); props.setProperty(key, value);
 		
+		// Getting properties file and creating its subdirectories
+		final File propsFile = new File((resource == null) ? ResourceManager.getResource(CUSTOM_RES) : ResourceManager.getResource(resource)); propsFile.getParentFile().mkdirs();
+		
+		// Writing data
+		final FileOutputStream   stream = new FileOutputStream(propsFile);
+		final OutputStreamWriter writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8);
+			
+		props.store(writer, null);
+			
+		stream.close();
+			
 	}
 	
 	/** Stores the given <code>key</code> and <code>array</code> pair in the given <code>resource</code> file.<br>
@@ -148,9 +127,10 @@ public class PropertiesManager {
 	 *  @param key - the key to be placed into this property list
 	 *  @param value - the value corresponding to key
 	 *  @param resource - the resource file using {@link ResourceManager} format
-	 *  @return 'true' if the key and value could be stored, 'false' otherwise.  */
-	public static boolean setStringArray(final String key, final String[] array, final String propsPath) {
-		return setStringArray(key, array, DELIMITER, propsPath);
+	 *  @return 'true' if the key and value could be stored, 'false' otherwise.
+	 *  @throws IOException when the properties file could not be written for some reason. */
+	public static void setStringArray(final String key, final String[] array, final String propsPath) throws IOException {
+		setStringArray(key, array, DELIMITER, propsPath);
 	}
 	
 	/** Stores the given <code>key</code> and <code>array</code> pair in the given <code>resource</code> file.<br>
@@ -159,29 +139,21 @@ public class PropertiesManager {
 	 *  @param value - the value corresponding to key
 	 *  @param delimiter - a delimiter to separate array values in a string value 
 	 *  @param resource - the resource file using {@link ResourceManager} format
-	 *  @return 'true' if the key and value could be stored, 'false' otherwise.  */
-	public static boolean setStringArray(final String key, final String[] array, final String delimiter, final String propsPath) {
+	 *  @throws IOException when the properties file could not be written for some reason. */
+	public static void setStringArray(final String key, final String[] array, final String delimiter, final String propsPath) throws IOException {
 		
-		try {
+		final String value = serialize(array, delimiter);
+		final Properties props = getProperties(propsPath);
 			
-			final String value = serialize(array, delimiter);
-			final Properties props = getProperties(propsPath);
+		props.setProperty(key, value);
 			
-			props.setProperty(key, value);
+		final FileOutputStream   stream = new FileOutputStream(propsPath);
+		final OutputStreamWriter writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8);
 			
-			final FileOutputStream   stream = new FileOutputStream(propsPath);
-			final OutputStreamWriter writer = new OutputStreamWriter(stream, Charset.forName("UTF-8"));
+		props.store(writer, null);
 			
-			props.store(writer, null);
+		stream.close();
 			
-			stream.close();
-			
-			return true;
-		}
-		catch (IOException exception) {
-			return false;
-		}
-		
 	}
 	
 	/** Stores the given <code>key</code> and <code>value</code> pair in the given <code>resource</code> file.<br>
@@ -189,10 +161,9 @@ public class PropertiesManager {
 	 *  @param key - the key to be placed into this property list
 	 *  @param value - the value corresponding to key
 	 *  @param resource - the resource file using {@link ResourceManager} format
-	 *  @return 'true' if the key and value could be stored, 'false' otherwise.  */
-	public static boolean setInt(final String key, final int value, final String propsPath) {
-		try { return setString(key, Integer.toString(value), propsPath); }
-		catch (NumberFormatException exception) { return false; }
+	 *  @throws IOException when the properties file could not be written for some reason. */
+	public static void setInt(final String key, final int value, final String propsPath) throws IOException {
+		setString(key, Integer.toString(value), propsPath);
 	}
 	
 	/** Stores the given <code>key</code> and <code>array</code> pair in the given <code>resource</code> file.<br>
@@ -201,9 +172,9 @@ public class PropertiesManager {
 	 *  @param key - the key to be placed into this property list
 	 *  @param value - the value corresponding to key
 	 *  @param resource - the resource file using {@link ResourceManager} format
-	 *  @return 'true' if the key and value could be stored, 'false' otherwise.  */
-	public static boolean setIntArray(final String key, final int[] array, final String propsPath) {
-		return setIntArray(key, array, DELIMITER, propsPath);
+	 *  @throws IOException when the properties file could not be written for some reason. */
+	public static void setIntArray(final String key, final int[] array, final String propsPath) throws IOException {
+		setIntArray(key, array, DELIMITER, propsPath);
 	}
 	
 	/** Stores the given <code>key</code> and <code>array</code> pair in the given <code>resource</code> file.<br>
@@ -212,29 +183,34 @@ public class PropertiesManager {
 	 *  @param value - the value corresponding to key
 	 *  @param delimiter - a delimiter to separate array values in a string value 
 	 *  @param resource - the resource file using {@link ResourceManager} format
-	 *  @return 'true' if the key and value could be stored, 'false' otherwise.  */
-	public static boolean setIntArray(final String key, final int[] array, final String delimiter, final String propsPath) {
-		try { return setStringArray(key, Arrays.stream(array).mapToObj(String::valueOf).toArray(String[]::new), delimiter, propsPath); }
-		catch (Exception exception) { return false; }
+	 *  @throws IOException when the properties file could not be written for some reason. */
+	public static void setIntArray(final String key, final int[] array, final String delimiter, final String propsPath) throws IOException {
+		setStringArray(key, Arrays.stream(array).mapToObj(String::valueOf).toArray(String[]::new), delimiter, propsPath);
 	}
 	
 	/**************************** Internal Methods Section ***************************************/
 	
 	/** Reads a property file from the given <code>resource</code> using UTF-8 character encoding.
 	 *  @param resource - property resource path
-	 *  @return A properties class with all data loaded. */
+	 *  @return A properties class with all data loaded or an empty object if the resource file does not exist. */
 	private static Properties getProperties(final String resource) throws IOException {
 
 		final String propsPath = (resource == null) ? ResourceManager.getResource(CUSTOM_RES) : ResourceManager.getResource(resource);
 		
 		final Properties props = new Properties();
 		
-		final FileInputStream   stream = new FileInputStream  (propsPath);
-		final InputStreamReader reader = new InputStreamReader(stream, Charset.forName("UTF-8"));
+		final File propsFile = new File(propsPath);
 		
-		props.load(reader);
-		
-		stream.close();
+		if (!propsFile.isDirectory() && propsFile.canRead()) {
+			
+			final FileInputStream   stream = new FileInputStream  (propsPath);
+			final InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
+			
+			props.load(reader);
+			
+			stream.close();
+			
+		}
 		
 		return props;
 		
