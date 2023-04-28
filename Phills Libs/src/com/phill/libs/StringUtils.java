@@ -217,7 +217,7 @@ public class StringUtils {
 	 *  @param string - String
 	 *  @return A new string without leading zeroes. */
 	public static String wipeLeadingZeros(final String string) {
-		return string.replaceFirst("^0+(?!$)", "");
+		return (string == null) ? null : string.replaceFirst("^0+(?!$)", "");
 	}
 	
 	/** Removes multiple spaces between words in the given string.
