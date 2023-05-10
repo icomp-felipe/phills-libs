@@ -140,14 +140,17 @@ public class PropertiesManager {
 	 *  @param delimiter - a delimiter to separate array values in a string value 
 	 *  @param resource - the resource file using {@link ResourceManager} format
 	 *  @throws IOException when the properties file could not be written for some reason. */
-	public static void setStringArray(final String key, final String[] array, final String delimiter, final String propsPath) throws IOException {
+	public static void setStringArray(final String key, final String[] array, final String delimiter, final String resource) throws IOException {
 		
 		final String value = serialize(array, delimiter);
-		final Properties props = getProperties(propsPath);
-			
+		final Properties props = getProperties(resource);
+		
+		// Getting properties file and creating its subdirectories
+		final File propsFile = new File((resource == null) ? ResourceManager.getResource(CUSTOM_RES) : ResourceManager.getResource(resource)); propsFile.getParentFile().mkdirs();
+		
 		props.setProperty(key, value);
 			
-		final FileOutputStream   stream = new FileOutputStream(propsPath);
+		final FileOutputStream   stream = new FileOutputStream(propsFile);
 		final OutputStreamWriter writer = new OutputStreamWriter(stream, StandardCharsets.UTF_8);
 			
 		props.store(writer, null);
