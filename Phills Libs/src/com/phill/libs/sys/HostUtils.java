@@ -3,7 +3,6 @@ package com.phill.libs.sys;
 import java.awt.Desktop;
 import java.awt.Toolkit;
 import java.net.URI;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -22,7 +21,7 @@ public class HostUtils {
 	 *  @param url - URL */
 	public static void openURL(final String url) {
 		
-		try { Desktop.getDesktop().browse(new URL(url).toURI()); }
+		try { Desktop.getDesktop().browse(new URI(url)); }
 		catch (Exception exception) { }
 		
 	}
@@ -40,7 +39,7 @@ public class HostUtils {
 				final String encodedMessage = URLEncoder.encode(message == null ? "" : message, StandardCharsets.UTF_8);
 				final String link = String.format("https://api.whatsapp.com/send?phone=%s&text=%s", number, encodedMessage);
 				
-				Desktop.getDesktop().browse(new URL(link).toURI());
+				Desktop.getDesktop().browse(new URI(link));
 				
 			}
 			catch (Exception exception) { }
