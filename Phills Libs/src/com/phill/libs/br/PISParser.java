@@ -4,7 +4,7 @@ import com.phill.libs.StringUtils;
 
 /** Implementa o algoritmo de verificação de PIS/PASEP/NIS/NIT.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 1.5, 17/SET/2020 */
+ *  @version 3.8, 21/JUN/2023 */
 public class PISParser {
 	
 	/** Aplica a máscara de PIS na string informada.
@@ -19,6 +19,17 @@ public class PISParser {
 		return String.format("%s.%s.%s-%s",pis.substring(0,3),pis.substring(3,8),pis.substring(8,10),pis.substring(10));
 	}
 
+	/** Implementa a máscara de desidentificação do PIS, de acordo com a LGPD.
+	 *  @param pis - número de PIS
+	 *  @see <a href=https://repositorio.cgu.gov.br/bitstream/1/66920/3/Parecer_Referencial_001_2021_CONJUR_CGU_CGU_AGU.pdf>Parecer Referencial CGU</a> */
+	public static String oculta(final String pis) {
+		
+		if ( (pis == null) || (pis.length() != 11))
+			return pis;
+		
+		return String.format("***.%s.%s.*-*", pis.substring(3,6), pis.substring(6,9));
+	}
+	
 	/** Verifica se um número de PIS/PASEP/NIS/NIT é válido.
 	 *  @param pis - String contendo número de PIS, pode conter máscara ou não, aqui apenas os números são extraídos.
 	 *  @return Validade do PIS (cálculo numérico). */

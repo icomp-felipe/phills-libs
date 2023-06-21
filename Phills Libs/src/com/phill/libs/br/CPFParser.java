@@ -4,7 +4,7 @@ import com.phill.libs.StringUtils;
 
 /** Implementa o algoritmo de verificação de CPF.
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 3.7, 24/APR/2021 */
+ *  @version 3.8, 21/JUN/2023 */
 public class CPFParser {
 	
 	/** Aplica a máscara de CPF na string informada.
@@ -17,6 +17,17 @@ public class CPFParser {
 			return cpf;
 		
 		return String.format("%s.%s.%s-%s",cpf.substring(0,3),cpf.substring(3,6),cpf.substring(6,9),cpf.substring(9));
+	}
+	
+	/** Implementa a máscara de desidentificação do CPF, de acordo com a LGPD.
+	 *  @param cpf - número de CPF
+	 *  @see <a href=https://repositorio.cgu.gov.br/bitstream/1/66920/3/Parecer_Referencial_001_2021_CONJUR_CGU_CGU_AGU.pdf>Parecer Referencial CGU</a> */
+	public static String oculta(final String cpf) {
+		
+		if ( (cpf == null) || (cpf.length() != 11))
+			return cpf;
+		
+		return String.format("***.%s.%s-**", cpf.substring(3,6), cpf.substring(6,9));
 	}
 	
 	/** Verifica se um número de CPF é válido.
