@@ -4,6 +4,7 @@ import java.io.*;
 import java.awt.*;
 import javax.swing.*;
 import java.nio.file.*;
+import java.util.Locale;
 
 import javax.imageio.*;
 import java.awt.image.*;
@@ -17,7 +18,7 @@ import org.apache.commons.io.FileUtils;
  *  * Note 2: when it comes to resource parameters, all methods here consider the 'res' directory as base to locate a resource file.
  *  For example, if your file is located at 'res/config/program.properties', your 'resource' string path will be 'config/program.properties'. 
  *  @author Felipe André - felipeandresouza@hotmail.com
- *  @version 4.5, 28/APR/2022 */
+ *  @version 4.6, 27/SEP/2023 */
 public class ResourceManager {	
 
 	/** Retrieves the current running project absolute path.
@@ -182,7 +183,7 @@ public class ResourceManager {
 	public static String getSQLString(final boolean turnBlankIntoNull, final String resource, final Object... args) throws IOException {
 		
 		String format = getSQLFormat(resource);
-		String query  = String.format(format, prepare(args));
+		String query  = String.format(Locale.US, format, prepare(args));
 		
 		return turnBlankIntoNull ? StringUtils.blankToNull(query) : query;
 	}
