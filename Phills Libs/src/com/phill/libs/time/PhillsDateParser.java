@@ -32,7 +32,7 @@ public class PhillsDateParser {
 			return formatter.parseDateTime(date);
 			
 		}
-		catch (IllegalArgumentException exception) {
+		catch (Exception exception) {
 			return null;
 		}
 		

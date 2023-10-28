@@ -228,7 +228,7 @@ public class PropertiesManager {
 		StringBuilder builder = new StringBuilder();
 		
 		for (String value: array)
-			builder.append(value + delimiter);
+			builder.append(value == null ? ("" + delimiter) : (value + delimiter));
 		
 		return builder.toString().trim();
 	}
