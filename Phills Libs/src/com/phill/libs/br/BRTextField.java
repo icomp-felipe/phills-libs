@@ -26,7 +26,7 @@ public abstract class BRTextField extends JFormattedTextField {
 	
 	public BRTextField(final MaskFormatter mascara) {
 		super(mascara);
-		this.addKeyListener((KeyReleasedListener) (event) -> parse());
+		this.addKeyListener((KeyReleasedListener) (_) -> parse());
 	}
 
 	/** Aplica o texto e pinta este campo de acordo com as cores:<br>

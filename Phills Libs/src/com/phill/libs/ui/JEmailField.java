@@ -26,7 +26,7 @@ public class JEmailField extends JTextField {
 	/** Main constructor building the component and applying the validation algorithm listener. */
 	public JEmailField() {
 		this.pattern = Pattern.compile(email_pattern,Pattern.CASE_INSENSITIVE);
-		this.addKeyListener((KeyReleasedListener) (event) -> parse());
+		this.addKeyListener((KeyReleasedListener) (_) -> parse());
 	}
 
 	/** Does the validation and updates the UI. */

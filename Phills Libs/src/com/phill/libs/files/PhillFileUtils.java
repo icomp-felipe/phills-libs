@@ -82,7 +82,7 @@ public class PhillFileUtils {
 	 *  @param directory - the directory to have its files listed
 	 *  @param extension - the file extension to be applied on the select criteria */
 	public static File[] listFilesFiltered(final File directory, final String extension){
-		return directory.listFiles((dir, name) -> name.toLowerCase().endsWith(extension));
+		return directory.listFiles((_, name) -> name.toLowerCase().endsWith(extension));
 	}
 
 	/** Gets all files in the given 'directory' using the given 'order' of its filenames.
