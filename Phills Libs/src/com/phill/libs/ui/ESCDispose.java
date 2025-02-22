@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 /** Implements a method to dispose a JFrame when the hotkey 'ESC' is pressed.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.0, 30/SEP/2022 */
 public class ESCDispose {
 

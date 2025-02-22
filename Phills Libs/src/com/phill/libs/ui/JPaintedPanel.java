@@ -9,7 +9,7 @@ import com.phill.libs.ResourceManager;
 
 /** This custom implementation of a {@link JPanel} allows you to use an image
  *  file as background of this panel.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 2.0, 19/SET/2020 */
 public class JPaintedPanel extends JPanel {
 

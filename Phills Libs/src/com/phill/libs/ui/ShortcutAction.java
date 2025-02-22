@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 /** Implements an {@link AbstractAction} with embedded mnemonic and accelerator.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.0, 04/MAY/2021
  *  @see ShortcutActionInterface */
 public class ShortcutAction extends AbstractAction {

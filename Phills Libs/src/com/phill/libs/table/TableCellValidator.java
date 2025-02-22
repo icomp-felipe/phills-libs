@@ -1,7 +1,7 @@
 package com.phill.libs.table;
 
 /** Contains a method to validate a JTable cell data.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.0, 26/APR/2021 */
 @FunctionalInterface
 public interface TableCellValidator {

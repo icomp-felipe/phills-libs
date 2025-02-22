@@ -7,7 +7,7 @@ import javax.swing.event.DocumentListener;
  *  this one does not allow the programmer to do it.
  *  NOTE: when using {@link DocumentListener}, the methods 'insertUpdate' and 'removeUpdate'
  *  are redirected to the 'changedUpdate' method.
- * @author Felipe André - felipeandresouza@hotmail.com
+ * @author Felipe André - felipeandre.eng@gmail.com
  * @version 1.5, 17/SEP/2020 */
 @FunctionalInterface
 public interface DocumentChangeListener extends DocumentListener {

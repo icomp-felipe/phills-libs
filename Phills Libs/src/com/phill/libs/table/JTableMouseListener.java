@@ -7,7 +7,7 @@ import javax.swing.JTable;
 
 /** This class is useful when you need to open a popup menu
  *  using the mouse right click in a specific {@link JTable} row.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.5, 17/SEP/2020 */
 public class JTableMouseListener extends MouseAdapter {
 	

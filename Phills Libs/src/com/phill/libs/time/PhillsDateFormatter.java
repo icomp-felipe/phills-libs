@@ -4,7 +4,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 /** Contains some known date formats to be used in {@link PhillsDateParser} methods.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 2.1, 22/JAN/2022 */
 public enum PhillsDateFormatter {
 

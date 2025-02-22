@@ -12,7 +12,7 @@ import com.phill.libs.ui.KeyReleasedListener;
  *  Caso o número esteja correto, o campo muda de cor para 'verde', caso
  *  contrário, muda para 'vermelho'. Se o número digitado estiver
  *  ainda incompleto, o campo permanece em 'branco'.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.1, 24/APR/2021
  *  @see JFormattedTextField  */
 public abstract class BRTextField extends JFormattedTextField {

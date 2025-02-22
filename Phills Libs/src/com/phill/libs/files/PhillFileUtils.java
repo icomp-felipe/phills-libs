@@ -16,7 +16,7 @@ import javax.swing.*;
 import javax.swing.filechooser.*;
 
 /** Implements some useful methods to manipulate files in Java.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 2.3, 27/MAR/2023 */
 public class PhillFileUtils {
 

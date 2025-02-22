@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.text.*;
 
 /** Implements a bounded-character {@link JTextField}.
-  * @author Felipe André - felipeandresouza@hotmail.com
+  * @author Felipe André - felipeandre.eng@gmail.com
   * @version 1.5, 17/SEP/2020
   * @see JTextField */
 public class JTextFieldBounded extends JTextField {

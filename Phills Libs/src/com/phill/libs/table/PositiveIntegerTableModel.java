@@ -3,7 +3,7 @@ package com.phill.libs.table;
 import javax.swing.table.DefaultTableModel;
 
 /** This class has a custom implementation of a {@link DefaultTableModel} where only positive integers are allowed.<br>
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.0, 25/APR/2021 */
 public class PositiveIntegerTableModel extends DefaultTableModel {
 

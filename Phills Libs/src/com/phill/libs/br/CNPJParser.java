@@ -3,7 +3,7 @@ package com.phill.libs.br;
 import com.phill.libs.StringUtils;
 
 /** Implementa o algoritmo de verificação de CNPJ.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.0, 24/APR/2021 */
 public class CNPJParser {
 	

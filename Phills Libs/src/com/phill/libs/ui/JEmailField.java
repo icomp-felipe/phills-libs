@@ -8,7 +8,7 @@ import javax.swing.JTextField;
  *  the user knowing if the typed email is valid in realtime. The foreground
  *  color of this field is automatically changed to 'green' when its email is
  *  valid, and 'white' otherwise.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.5, 17/SET/2020
  *  @see JTextField  */
 public class JEmailField extends JTextField {

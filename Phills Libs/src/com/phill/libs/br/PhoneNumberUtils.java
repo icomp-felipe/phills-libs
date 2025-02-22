@@ -3,7 +3,7 @@ package com.phill.libs.br;
 import com.phill.libs.StringUtils;
 
 /** Implementa alguns métodos de tratamento de dados para números de telefone brasileiros.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.5, 25/SET/2021 */
 public class PhoneNumberUtils {
 

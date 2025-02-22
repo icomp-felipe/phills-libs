@@ -11,7 +11,7 @@ import javax.swing.text.MaskFormatter;
  *  Note 1: to keep data integrity, always set your text using the {@link JFormattedTextField#setText(String)} method
  *  instead of setValue method, and get using the {@link JFormattedTextField#getValue()} method;<br>
  *  Note 2: this formatter always returns a String when using the {@link JFormattedTextField#getValue()} method.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.0, 12/SEP/2021 */
 public class ErasableMaskFormatter extends MaskFormatter {
 	

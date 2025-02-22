@@ -3,7 +3,7 @@ package com.phill.libs.table;
 import javax.swing.JTable;
 
 /** This interface helps dealing with {@link JTable} data filling.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.5, 17/SEP/2020 */
 @FunctionalInterface
 public interface JTableRowData {

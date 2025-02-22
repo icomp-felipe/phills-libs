@@ -9,7 +9,7 @@ import javax.swing.*;
  *  In fact, you can have as many {@link MandatoryFieldsManager}s as you may need, each one
  *  of them containing lots os fields to be validated, but you only need one instance of this
  *  logger and pass them to your managers.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 2.0, 22/SEP/2020 */
 public class MandatoryFieldsLogger {
 

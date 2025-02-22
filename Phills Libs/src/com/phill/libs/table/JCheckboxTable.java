@@ -9,7 +9,7 @@ import javax.swing.table.TableModel;
  *  define some columns to be a {@link JCheckBox} instead of the regular text ones.<br>
  *  Note 1: {@link CheckboxTableModel} is the model class for being used with this table;<br>
  *  Note 2: remember to always use the same constructor data between table models and tables. 
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.0, 18/SEP/2020 */
 public class JCheckboxTable extends JTable {
 

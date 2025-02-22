@@ -6,7 +6,7 @@ import javax.swing.plaf.basic.BasicProgressBarUI;
 
 /** Custom implementation of a {@link JProgressBar}.
  *  Paints the component foreground according to the given colors and current value.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.5, 22/MAY/2021 */
 public class ProgressBarColor extends JProgressBar {
 

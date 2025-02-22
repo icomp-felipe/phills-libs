@@ -7,7 +7,7 @@ import javax.swing.JLabel;
  *  a {@link MandatoryFieldValidator} validator who tells if this instance is satisfied or not, an error string returned
  *  by this class {@link #validate()} method, a validation activation control attribute (boolean) and the original label
  *  {@link Color}.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 2.2, 19/SEP/2021 */
 public class MandatoryField {
 	

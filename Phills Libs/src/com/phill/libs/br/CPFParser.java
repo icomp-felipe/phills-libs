@@ -3,7 +3,7 @@ package com.phill.libs.br;
 import com.phill.libs.StringUtils;
 
 /** Implementa o algoritmo de verificação de CPF.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 3.8, 21/JUN/2023 */
 public class CPFParser {
 	

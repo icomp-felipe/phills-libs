@@ -4,7 +4,7 @@ import javax.swing.table.*;
 
 /** This custom implementation of a {@link DefaultTableModel} keeps all data as
  *  non-editable fields, by always returning 'false' in isCellEditable method.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.5, 18/SEP/2020 */
 public class LockedTableModel extends DefaultTableModel {
 

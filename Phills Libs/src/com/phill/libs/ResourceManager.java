@@ -17,7 +17,7 @@ import org.apache.commons.io.FileUtils;
  *  * Note 1: all methods here use the 'res' directory as base, it must be placed in your Java application project home.<br>
  *  * Note 2: when it comes to resource parameters, all methods here consider the 'res' directory as base to locate a resource file.
  *  For example, if your file is located at 'res/config/program.properties', your 'resource' string path will be 'config/program.properties'. 
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 4.6, 27/SEP/2023 */
 public class ResourceManager {	
 

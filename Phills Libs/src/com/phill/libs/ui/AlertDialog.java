@@ -5,7 +5,7 @@ import javax.swing.*;
 
 /** This class implements some cool shortcuts to manipulate dialogs
  *  using {@link JOptionPane}. 
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 5.1, 16/MAR/2023 */
 public class AlertDialog extends JOptionPane {
 	

@@ -5,7 +5,7 @@ import java.awt.datatransfer.*;
 import java.io.IOException;
 
 /** Contains some methods to manipulate the system clipboard.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.0, 23/JUN/2020 */
 public class ClipboardUtils {
 	

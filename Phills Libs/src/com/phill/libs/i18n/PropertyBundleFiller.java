@@ -15,7 +15,7 @@ import com.phill.libs.ui.GraphicsHelper;
  *  from the property resource bundle.<br>
  *  Note: the UI update process is controlled by the {@link PropertyBundle} class,
  *  passed as parameter to this class' constructor.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.0, 23/SEP/2020 */
 public class PropertyBundleFiller {
 	

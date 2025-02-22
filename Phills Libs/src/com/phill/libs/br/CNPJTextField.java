@@ -11,7 +11,7 @@ import com.phill.libs.ui.GraphicsHelper;
  *  esteja correto, o campo muda de cor para 'verde', caso
  *  contrário, muda para 'vermelho'. Se o CNPJ digitado esti-
  *  ver incompleto, o campo permanece em 'branco'.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.1, 25/APR/2021
  *  @see JFormattedTextField  */
 public class CNPJTextField extends BRTextField {

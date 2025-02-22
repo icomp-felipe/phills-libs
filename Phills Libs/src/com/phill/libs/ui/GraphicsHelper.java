@@ -12,7 +12,7 @@ import com.phill.libs.ResourceManager;
 
 /** Singleton class used to be a helper to some methods related to graphic
  *  components personalization in Java like frames, textfields and many more.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 5.0, 24/SEP/2020 */
 public final class GraphicsHelper {
 	

@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** Contains useful methods to manipulate {@link String} in Java applications.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 2.7, 25/MAR/2023 */
 public class StringUtils {
 
@@ -238,7 +238,7 @@ public class StringUtils {
 	
 	/** (EN) Class designed to handle common Brazilian strings like names, adresses and currency.<br>
 	 *  (PT) Classe dedicada a manupulação de algumas strings clássicas do BR, tais como nomes, endereços e moeda.
-	 *  @author Felipe André - felipeandresouza@hotmail.com 
+	 *  @author Felipe André - felipeandre.eng@gmail.com 
 	 *  @version 1.0, 17/SEP/2020 */
 	public static class BR {
 		

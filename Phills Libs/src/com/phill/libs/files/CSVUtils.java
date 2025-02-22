@@ -4,7 +4,7 @@ import java.io.*;
 
 /** This class contains some useful methods to manipulate
  *  Comma Separated Value Files (.csv) in Java.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.5, 17/SEP/2020 */
 public class CSVUtils {
 

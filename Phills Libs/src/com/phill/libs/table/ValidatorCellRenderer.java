@@ -6,7 +6,7 @@ import javax.swing.table.*;
 
 /** Contains a custom implementation of a {@link DefaultTableCellRenderer}, allowing to determine each of the
  *  individual JTable's cell background color, according to a {@link TableCellValidator#validate(Object)} method result.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.0, 26/APR/2021
  *  @see TableCellValidator */
 public class ValidatorCellRenderer extends DefaultTableCellRenderer {

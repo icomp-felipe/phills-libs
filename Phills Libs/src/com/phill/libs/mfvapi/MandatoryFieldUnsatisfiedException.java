@@ -1,7 +1,7 @@
 package com.phill.libs.mfvapi;
 
 /** MFV API exception available to be thrown.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.5, 22/SEP/2020 */
 public class MandatoryFieldUnsatisfiedException extends Exception {
 

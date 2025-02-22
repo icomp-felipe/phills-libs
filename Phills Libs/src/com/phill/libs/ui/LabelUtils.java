@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 /** Here you can find some methods to deal with JLabels in your applications.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.0, 23/JUN/2020 */
 public class LabelUtils {
 

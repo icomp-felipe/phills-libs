@@ -13,7 +13,7 @@ import com.phill.libs.ResourceManager;
  *  3. Here, the i18n files can be stored in any directory of your system, but don't forget to say this to the constructor;<br>
  *  4. You can choose the i18n files extensions;<br>
  *  5. You may also want to know the {@link PropertyBundleFiller} class if you want to integrate this class with Java Swing components.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 1.0, 23/SEP/2020 */
 public class PropertyBundle {
 	

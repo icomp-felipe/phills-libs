@@ -15,7 +15,7 @@ import javax.swing.*;
  *  methods) and paint the related labels with a red color or initial label color when the validation method returns false or true, respectively. 
  *  Alternatively you may want to use a {@link MandatoryFieldsLogger} to get the error strings (already given) thrown when the validation method
  *  returns false or even the internal {@link MandatoryFieldsManager#validate()} method.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 2.1, 11/APR/2021 */
 public class MandatoryFieldsManager {
 

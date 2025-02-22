@@ -5,7 +5,7 @@ import java.awt.event.FocusListener;
 
 /** Implements only the 'focusLost' method from the {@link FocusListener} class,
  *  intended to be used with lambda functions.
- * @author Felipe André - felipeandresouza@hotmail.com
+ * @author Felipe André - felipeandre.eng@gmail.com
  * @version 1.0, 06/OCT/2021 */
 @FunctionalInterface
 public interface FocusLostListener extends FocusListener {

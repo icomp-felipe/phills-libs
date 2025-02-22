@@ -5,7 +5,7 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 /** Provides useful methods to deal with Table components in Java UI applications.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 2.5, 19/SEP/2020 */
 public class TableUtils {
 

@@ -6,7 +6,7 @@ import java.nio.charset.*;
 
 /** Contains a static implementation of a {@link Properties} manager for Java.
  *  Also, the UTF-8 character encoding is used by default in all methods.
- *  @author Felipe André - felipeandresouza@hotmail.com
+ *  @author Felipe André - felipeandre.eng@gmail.com
  *  @version 2.6, 20/APR/2023 */
 public class PropertiesManager {
 
