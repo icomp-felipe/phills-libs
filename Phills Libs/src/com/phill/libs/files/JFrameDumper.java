@@ -4,10 +4,7 @@ import java.awt.*;
 import java.awt.image.*;
 
 import java.io.*;
-
 import javax.imageio.*;
-
-import org.apache.commons.io.FilenameUtils;
 
 public class JFrameDumper {
 
@@ -17,8 +14,11 @@ public class JFrameDumper {
 		Graphics2D graphics = bi.createGraphics();
 		
 		container.print(graphics);
+
+		String fileName = file.getName();
+		String extension = fileName != null && fileName.contains(".") ? fileName.substring(fileName.lastIndexOf(".") + 1) : "";
 		
-		ImageIO.write(bi, FilenameUtils.getExtension(file.getName()), file);
+		ImageIO.write(bi, extension, file);
 		
 	}
 	

@@ -17,7 +17,7 @@ import javax.swing.filechooser.*;
 
 /** Implements some useful methods to manipulate files in Java.
  *  @author Felipe André - felipeandre.eng@gmail.com
- *  @version 2.3, 27/MAR/2023 */
+ *  @version 2.4, 16/MAR/2025 */
 public class PhillFileUtils {
 
 	// Available comparators (used in 'listFilesOrdered' method)
@@ -202,7 +202,7 @@ public class PhillFileUtils {
 	 *  @return A String with all text coming from the given file.
 	 *  @throws IOException if the file file could not be read. */
 	public static String readFileToString(File file) {
-		try { return org.apache.commons.io.FileUtils.readFileToString(file, StandardCharsets.UTF_8); }
+		try { return Files.readString(file.toPath(), StandardCharsets.UTF_8); }
 		catch (IOException exception) { exception.printStackTrace(); return null; }
 	}
 	

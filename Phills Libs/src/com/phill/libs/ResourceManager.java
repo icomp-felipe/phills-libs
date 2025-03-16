@@ -3,6 +3,8 @@ package com.phill.libs;
 import java.io.*;
 import java.awt.*;
 import javax.swing.*;
+
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.Locale;
 
@@ -10,15 +12,13 @@ import javax.imageio.*;
 import java.awt.image.*;
 import javax.sound.sampled.*;
 
-import org.apache.commons.io.FileUtils;
-
 /** Contains some methods to deal with external resources (strings, formats, files, etc)
  *  in Java applications.<br>
  *  * Note 1: all methods here use the 'res' directory as base, it must be placed in your Java application project home.<br>
  *  * Note 2: when it comes to resource parameters, all methods here consider the 'res' directory as base to locate a resource file.
  *  For example, if your file is located at 'res/config/program.properties', your 'resource' string path will be 'config/program.properties'. 
  *  @author Felipe André - felipeandre.eng@gmail.com
- *  @version 4.6, 27/SEP/2023 */
+ *  @version 4.7, 16/MAR/2025 */
 public class ResourceManager {	
 
 	/** Retrieves the current running project absolute path.
@@ -52,7 +52,7 @@ public class ResourceManager {
 		try {
 			
 			final File formatFile = getResourceAsFile(resource);
-			final String   format = FileUtils.readFileToString(formatFile,"UTF-8");
+			final String   format = Files.readString(formatFile.toPath(), StandardCharsets.UTF_8);
 			
 			return format;
 		}
