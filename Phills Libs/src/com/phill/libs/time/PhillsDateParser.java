@@ -1,7 +1,6 @@
 package com.phill.libs.time;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -9,7 +8,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 /** A helper class to parse dates between Java and JodaTime date.
  *  @author Felipe André - felipeandre.eng@gmail.com
- *  @version 2.1, 22/JAN/2022 */
+ *  @version 2.2, 14/APR/2025 */
 public class PhillsDateParser {
 
 	/** Converts a Java Date to a Joda Time Date.
@@ -113,31 +112,16 @@ public class PhillsDateParser {
 	 *  using a timestamp in 'sec' format.
 	 *  @param seconds - timestamp in seconds
 	 *  @return Time in format '12 h 57 min 34 s'. */
-	public static String getHumanReadableTime(long seconds) {
+	public static String getHumanReadableTime(final long seconds) {
 		
-        if(seconds < 0)
-            return "0s";
+		if (seconds < 0L)
+			throw new IllegalArgumentException("Seconds cannot be negative.");
+		
+        long hours = seconds / 3600;
+        long minutes = (seconds % 3600) / 60;
+        long secs = seconds % 60;
         
-        long hours = TimeUnit.SECONDS.toHours(seconds);
-        seconds   -= TimeUnit.HOURS.toSeconds(hours);
-        
-        long minutes = TimeUnit.SECONDS.toMinutes(seconds);
-        seconds -= TimeUnit.MINUTES.toSeconds(minutes);
-
-        StringBuilder sb = new StringBuilder(64);
-        
-        if (hours > 0) {
-        	sb.append(hours);
-        	sb.append(" h ");
-        }
-        if (minutes > 0) {
-        	sb.append(minutes);
-        	sb.append(" min ");
-        }
-        sb.append(seconds);
-        sb.append(" s");
-
-        return(sb.toString());
+        return String.format("%02d h %02d min %02d s", hours, minutes, secs);
     }
 	
 	/**************************** Internal Methods Section ***************************************/
