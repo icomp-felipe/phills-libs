@@ -36,10 +36,21 @@ public class HostUtils {
 			
 			try {
 				
-				final String encodedMessage = URLEncoder.encode(message == null ? "" : message, StandardCharsets.UTF_8);
-				final String link = String.format("https://api.whatsapp.com/send?phone=%s&text=%s", number, encodedMessage);
-				
-				Desktop.getDesktop().browse(new URI(link));
+				if (message != null && !message.isBlank()) {
+					
+					final String encodedMessage = URLEncoder.encode(message == null ? "" : message, StandardCharsets.UTF_8);
+					final String link = String.format("https://api.whatsapp.com/send?phone=%s&text=%s", number, encodedMessage);
+					
+					Desktop.getDesktop().browse(new URI(link));
+					
+				}
+				else {
+					
+					final String link = String.format("https://api.whatsapp.com/send?phone=%s", number);
+					
+					Desktop.getDesktop().browse(new URI(link));
+					
+				}
 				
 			}
 			catch (Exception exception) { }
