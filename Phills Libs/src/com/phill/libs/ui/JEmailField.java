@@ -1,15 +1,16 @@
 package com.phill.libs.ui;
 
 import java.awt.Color;
-import java.util.regex.Pattern;
 import javax.swing.JTextField;
+
+import org.apache.commons.validator.routines.EmailValidator;
 
 /** Implements an email validation algorithm in a {@link JTextField} to allow
  *  the user knowing if the typed email is valid in realtime. The foreground
  *  color of this field is automatically changed to 'green' when its email is
  *  valid, and 'white' otherwise.
  *  @author Felipe André - felipeandre.eng@gmail.com
- *  @version 1.5, 17/SET/2020
+ *  @version 1.6, 14/JUL/2026
  *  @see JTextField  */
 public class JEmailField extends JTextField {
 
@@ -19,25 +20,16 @@ public class JEmailField extends JTextField {
 	// Custom color
 	private final Color gr_lt = new Color(0x84efa5);
 
-	// e-mail validation pattern, following the RFC822 specification
-	private final String email_pattern = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
-	private final Pattern pattern;
-	
-	/** Main constructor building the component and applying the validation algorithm listener. */
-	public JEmailField() {
-		this.pattern = Pattern.compile(email_pattern,Pattern.CASE_INSENSITIVE);
+	{
 		this.addKeyListener((KeyReleasedListener) (_) -> parse());
 	}
-
+	
 	/** Does the validation and updates the UI. */
 	private synchronized boolean parse() {
 		
-		boolean matches = pattern.matcher(getText()).matches();
+		boolean matches = this.isCoherent();
 		
-		if (matches)
-			setBackground(gr_lt);
-		else
-			setBackground(Color.WHITE);
+		setBackground(matches ? gr_lt : Color.WHITE);
 		
 		return matches;
 	}
@@ -52,7 +44,7 @@ public class JEmailField extends JTextField {
 	/** Tells if the internal text is a valid e-mail address.
 	 *  @return 'true' if the internal data is a valid e-mail or 'false' otherwise */
 	public boolean isCoherent() {
-		return pattern.matcher(getText()).matches();
+		return EmailValidator.getInstance().isValid(getText());
 	}
 	
 }
